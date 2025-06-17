@@ -1,0 +1,19 @@
+# General
+.env
+.DS_Store
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Vue
+/dist
+/.env.local
+/.env.*.local
+
+# Logs
+logs
+*.log
+
+# OS
+Thumbs.db
