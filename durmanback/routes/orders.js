@@ -4,7 +4,7 @@ const verifyToken = require('../middlewares/verifyToken');
 const verificarRol = require('../middlewares/verificationRol');
 const { generarFirma, verificarFirmaMiddleware } = require('../middlewares/firmaIntegridad.js')
 const verificarLicencia = require('../middlewares/verifyLicense');
-const { rolesAdmin } = require('../helpers/roles');
+const { rolesAdmin, rolesPro } = require('../helpers/roles');
 
 const attachDbHybrid = require('../middlewares/attachDbHybrid'); // middleware para asignar la base de datos correcta
 console.log(typeof verificarRol); // debe imprimir "function"
@@ -41,35 +41,59 @@ router.get('/api/orders', verificarRol(rolesAdmin),verifyToken, attachDbHybrid, 
 });
 
 // Get order by orderNumber
-router.get('/orders/:orderNumber',  verificarRol(rolesAdmin), verifyToken, attachDbHybrid, async (req, res) => {
-  try {
-      const empresa_id = req.empresa_id;
-      const orderNumber = req.params.orderNumber;
-      const db = req.db;
-
-      let query = 'SELECT * FROM orders WHERE orderNumber = ?';
-      let params = [orderNumber];
-
-      if (req.tipo_acceso === 'compartida') {
-          query += ' AND empresa_id = ?';
-          params.push(empresa_id);
+router.get('/api/orders/search', verifyToken, attachDbHybrid, verificarRol(rolesPro), async (req, res) => {
+    const { query, page = 1, limit = 10 } = req.query;
+  
+    if (!query) return res.status(400).json({ error: 'Parámetro de búsqueda requerido' });
+  
+    const offset = (page - 1) * limit;
+    const db = req.db;
+    const empresa_id = req.empresa_id;
+    const tipo_acceso = req.tipo_acceso;
+  
+    try {
+      const searchTerm = `%${query}%`;
+  
+      // Campos de búsqueda: ajusta según tus columnas
+      let whereClause = `
+        WHERE (orderNumber LIKE ? OR status LIKE ? OR supplier LIKE ?)`;
+  
+      const params = [searchTerm, searchTerm, searchTerm];
+  
+      // Filtro por empresa en modo compartido
+      if (tipo_acceso === 'compartida') {
+        whereClause += ' AND empresa_id = ?';
+        params.push(empresa_id);
       }
-
-      const [rows] = await db.execute(query, params);
-
-      if (rows.length === 0) {
-          return res.status(404).json({ error: 'Orden no encontrada' });
-      }
-
-      return res.json(rows[0]);
-  } catch (err) {
-      console.error('Error al buscar la orden:', err);
-      return res.status(500).json({ 
-          error: 'Error al buscar la orden',
-          details: err.message 
+  
+      // Obtener total de coincidencias
+      const [countResult] = await db.query(
+        `SELECT COUNT(*) AS total FROM orders ${whereClause}`,
+        params
+      );
+  
+      // Obtener resultados con paginación
+      const [results] = await db.query(
+        `SELECT * FROM orders ${whereClause}
+         ORDER BY id DESC
+         LIMIT ? OFFSET ?`,
+        [...params, Number(limit), Number(offset)]
+      );
+  
+      res.json({
+        orders: results,
+        total: countResult[0].total,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(countResult[0].total / limit)
       });
-  }
-});
+  
+    } catch (err) {
+      console.error('Error al buscar órdenes:', err);
+      res.status(500).json({ error: 'Error interno al buscar órdenes' });
+    }
+  });
+  
 
 // Create new order
 router.post('/api/orders', verifyToken, attachDbHybrid,  verificarRol(rolesAdmin), async (req, res) => {
