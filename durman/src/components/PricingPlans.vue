@@ -13,24 +13,24 @@
             style="box-shadow: black 0px 0px 10px;"
           >
             <h2 class="text-sm font-semibold">{{ plan.name }}</h2>
-            <p class="text-3xl font-bold">${{ plan.price }}</p>
+            <p class="text-2xl font-bold">${{ plan.price }}</p>
           </div>
 
-          <div class="text-left text-sm mb-4" v-if="plan.features?.length">
+          <div class="text-left text-2sm mb-4" v-if="plan.features?.length">
             <div
               v-for="(feat, i) in plan.features"
               :key="i"
               class="mb-3"
             >
               <h3 class="font-bold mb-1">{{ feat.icon }} {{ feat.title }}</h3>
-              <p class="text-white text-xs mb-1 opacity-80">{{ feat.description }}</p>
-              <ul class="list-disc list-inside text-xs space-y-1 text-white opacity-90">
+              <p class="text-white text-1xs mb-1 opacity-80">{{ feat.description }}</p>
+              <ul class="list-disc list-inside text-1xs space-y-1 text-white opacity-90">
                 <li v-for="(f, idx) in feat.items" :key="idx">{{ f }}</li>
               </ul>
             </div>
           </div>
           <button class="bg-white text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-gray-200 transition">
-            BUY NOW
+            Seleccionar Plan
           </button>
         </div>
       </div>
@@ -49,71 +49,82 @@
   const allPlans = [
   {
       name: "BASIC",
-      price: 29,
+      price: '39.900',
 
       bg: "bg-teal-800",
       features: [
-        {
-          icon: "🚀",
-          title: "Automatización Avanzada",
-          description: "Automatiza tareas como pedidos, alertas y actualizaciones de stock sin intervención manual.",
-          items: [
-            "Pedidos automáticos a proveedores",
-            "Alertas inteligentes personalizadas"
-          ]
-        },
 
-      ]
+  {
+    icon: "🧠",
+    title: "Gestión Inteligente Centralizada",
+    description:
+      "Administra productos, proveedores y usuarios desde un solo panel con control total sobre cada entidad del sistema.",
+      items: [
+  "Gestión total de productos y proveedores",
+  "Inventario editable con historial de movimientos",
+  "Administrador con acceso completo al sistema"
+]
+
+  }
+]
+
     },
     {
       name: "STANDARD",
-      price: 59,
+      price: '79.900',
       userCount: "1",
       featureOne: "1,000",
       featureTwo: 5,
       featureThree: 5,
       bg: "bg-red-500",
       features: [
-        {
-          icon: "🚀",
-          title: "Automatización Avanzada",
-          description: "Automatiza tareas como pedidos, alertas y actualizaciones de stock sin intervención manual.",
-          items: ["Pedidos automáticos a proveedores", "Alertas inteligentes personalizadas"]
-        },
-        {
-          icon: "📊",
-          title: "Reportes Avanzados",
-          description: "Accede a informes personalizados y analíticas en tiempo real sobre tu inventario.",
-          items: ["Reportes PDF / Excel personalizados", "Métricas visuales con gráficos detallados"]
-        }
+      {
+  icon: "📦",
+  title: "Sistema de Gestión Completo",
+  description:
+    "Controla cada aspecto de tu operación desde un solo lugar, con herramientas inteligentes, exportación de datos y acceso multiusuario.",
+  items: [
+    "Gestión total de productos y proveedores",
+    "Gestión de stock en tiempo real con historial",
+    "Chatbot con IA para consultas y acciones rápidas",
+    "Generación de reportes profesionales (PDF y Excel)",
+    "Hasta 5 usuarios con un administrador principal"
+  ]
+}
+
       ]
     },
     {
       name: "BUSINESS",
-      price: 119,
+      price: '149.900',
       userCount: "1",
       featureOne: "1,000",
       featureTwo: 5,
       featureThree: 5,
       bg: "bg-blue-800",
       features: [
-        {
-          icon: "🔐",
-          title: "Seguridad Extendida",
-          description: "Controla accesos, crea permisos por roles y protege tu información con backups automáticos.",
-          items: ["Gestión de usuarios y roles", "Backups automáticos diarios"]
-        },
-        {
-          icon: "🤖",
-          title: "IA Operativa",
-          description: "Asistente inteligente que te ayuda a gestionar el inventario y sugerir acciones.",
-          items: [
-            "Chatbot con lógica empresarial",
-            "Sugerencias de reabastecimiento",
-            "Consultas inteligentes de stock y proveedores",
-            "Generación automática de reportes"
-          ]
-        }
+      {
+  icon: "🧬",
+  title: "Infraestructura Personalizada y Escalable",
+  description:
+    "Potencia tu operación con IA, gestión total, soporte exclusivo y una plataforma adaptada a tu empresa desde la base de datos hasta el diseño.",
+  items: [
+    "Chatbot con IA entrenado para tu operación",
+    "Gestión total y reportes exportables (PDF/Excel)",
+    "Base de datos exclusiva por empresa",
+    "Soporte técnico dedicado vía chat o llamada",
+    "Interfaz personalizable (colores, logo y más)",
+    "Usuarios ilimitados con gestión de roles",
+    "Gestión de movimientos de stock en tiempo real con historial",
+    "Seguimiento de acciones realizadas",
+
+    
+    "Actualizaciones y mejoras continuas",
+    "Capacitación y soporte personalizado"
+
+  ]
+}
+
       ]
     }
   ];

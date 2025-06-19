@@ -41,7 +41,7 @@ router.get("/",  verifyToken , async (req, res) => {
     }   
     
 });
-router.put("/color", verificarLicencia, verifyToken, verificarRol(['admin']), verificarLicencia, async (req, res) => {
+router.put("/color", verificarLicencia, verifyToken, verificarLicencia, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const { color_primario, color_secundario } = req.body; // Recibir ambos colores
@@ -129,7 +129,7 @@ router.put("/color", verificarLicencia, verifyToken, verificarRol(['admin']), ve
 });
 
 
-router.put("/logo", verificarLicencia, verifyToken, verificarRol(['admin']), async (req, res) => {
+router.put("/logo", verificarLicencia, verifyToken, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const { logo } = req.body; // Recibir ambos colores
@@ -187,7 +187,7 @@ router.put("/logo", verificarLicencia, verifyToken, verificarRol(['admin']), asy
         });
     }
 }); 
-router.delete('/logo', verificarLicencia, verifyToken, verificarRol(['admin']), async (req, res) => {
+router.delete('/logo', verificarLicencia, verifyToken, async (req, res) => {
     const empresa_id = req.user.empresa_id;
   
     // Conexión a la base de datos
@@ -241,7 +241,7 @@ router.delete('/logo', verificarLicencia, verifyToken, verificarRol(['admin']), 
   });
 
   
-router.put("/companyname", verifyToken, verificarLicencia, verificarRol(['admin']), async (req, res) => {
+router.put("/companyname", verifyToken, verificarLicencia, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const {  nombre_empresa } = req.body; // Recibir ambos colores
@@ -283,7 +283,7 @@ router.put("/companyname", verifyToken, verificarLicencia, verificarRol(['admin'
   });
 
 
-  router.put("/stock", verificarLicencia, verifyToken, verificarRol(['admin']), async (req, res) => {
+  router.put("/stock", verificarLicencia, verifyToken, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const { stock_minimo_global } = req.body;

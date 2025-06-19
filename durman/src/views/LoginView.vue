@@ -3,8 +3,14 @@
 
     <div class="form-l"></div>
        <div class="wrapper">
+
+        
         <form action="" @submit.prevent="login">
-            <h2>Login</h2>
+            <div class="flex justify-center items-center mb-4">
+      <img src="@/assets/logoo.svg" alt="LogistIQ Logo" class="w-20 h-20" />
+    </div><p class="text-sm text-gray-400 mb-6 text-center">Bienvenido, inicia sesión</p>
+
+
             <div class="input-group">
                 <span class="icon">
                     <ion-icon name="person"></ion-icon>
@@ -150,7 +156,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://durman.com.co/wp-content/uploads/2023/05/riego-por-goteo.jpg');
+    background: url('https://images.pexels.com/photos/29738258/pexels-photo-29738258.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(.8px);
 }
 
 .form-l::before {

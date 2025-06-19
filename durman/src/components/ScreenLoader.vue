@@ -10,11 +10,11 @@
       <div class="absolute inset-0">
         <img
           alt="Background"
-          src="https://i.imgur.com/RiY6XO8.png"
+          src="https://images.pexels.com/photos/29652323/pexels-photo-29652323.jpeg"
           
           class="w-full h-full object-cover"
         />
-        <div class="absolute inset-0 bg-red-800 opacity-60 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-blue-800 opacity-60 mix-blend-multiply"></div>
       
          <div class="absolute inset-0 flex items-center justify-center bg-red-800 opacity-10 mix-blend-multiply">
 
@@ -55,14 +55,14 @@
 
   <span style="letter-spacing: 0.7em; animation-delay: 3.5s;" class="textdown flex items-center justify-center text-black mt-4 text-[1.5vw] tracking-wide ">
 
-    Soluciones Inteligentes by Val4ndr0x
+    Soluciones Inteligentes by InNata
   </span>
 </div>
 
   
       <!-- Scroll indicator -->
       <div style="letter-spacing: 2em; animation-delay: 3.5s;" class="opacity-0 absolute bottom-6 w-full text-center text-xs tracking-widest text-white anim animate-slide-in" >
-        By Val4ndrox
+        By InNata
       </div>
     </div>
   </template>

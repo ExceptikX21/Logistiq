@@ -228,6 +228,7 @@ body {
   grid-template-columns: 4rem 1fr;
   gap: 10px;
   align-items: center;
+
   
 }
 
@@ -243,6 +244,7 @@ body {
   background-color: var(--bg);
   color: var(--text);
   border-radius: 0.5rem;
+  
 
   padding: 1rem;
   text-align: start;

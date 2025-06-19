@@ -63,7 +63,7 @@
     <div class="main-content">
       <header class="header grid grid-cols-3 gap-9">
         
-        <span class="header-title upp "> Bienvenido de nuevo <b> {{ user.username }}</b>  a,</span>
+        <span class="header-title upp "> Bienvenido <b> {{ user.username }}</b>  a,</span>
 
         <div class="header-search">
           <SearchView />

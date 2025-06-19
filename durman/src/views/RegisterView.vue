@@ -3,10 +3,13 @@
     <div>
       <div class="form-l"></div>
       <div class="wrapper">
+        
         <form @submit.prevent="registerUser">
 
           <div class="input-group">
-            <h2 style="font-size: 15px; margin-bottom: 10px;">Registro</h2>
+            <div class="flex justify-center items-center mb-4">
+      <img src="@/assets/logoo.svg" alt="LogistIQ Logo" class="w-20 h-20" />
+    </div>
 
             <span class="icon">
               <ion-icon name="person"></ion-icon>
@@ -45,7 +48,7 @@
                   <!-- Mensajes de éxito o error -->
         <p v-if="message" style="color: green;">{{ message }}</p>
         <p v-if="error" style="color: red;">{{ error }}</p>
-          <button type="submit" class="btn" >Register</button>
+          <button type="submit" class="btn" >Registrar cuenta</button>
           <div class="sign-link">
             <p>Already have an account? <router-link to="/loginview" class="login-link">Iniciar sesión</router-link></p>
           </div>
@@ -149,7 +152,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('https://durman.com.co/wp-content/uploads/2023/05/riego-por-goteo.jpg');
+    background: url('https://images.pexels.com/photos/29738258/pexels-photo-29738258.jpeg');
 }
 
 .form-l::before {
@@ -232,7 +235,7 @@ input:focus{
     position: relative;
     width: 100%;
     height: 40px;
-    background: #00c2a7;
+    background: #1E2A38;
     box-shadow: 0 2px 10px rgba(0, 0, 0, .4);
     font-size: 1em;
     color: #fff;

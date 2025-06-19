@@ -170,7 +170,7 @@
   
       <section id="seccion-membership" class="mt-12">
         <h3 class="text-2xl font-bold mb-4"> <span class="textclope">🟢 </span> Plan Activo</h3>
-        <div class="flex gap-4 mb-4" >
+        <div class="flex gap-4 mb-20" >
           <span
         class="font-semibold"
         :class="activeTabSub === 'basico' ? 'text-principal font-semibold' : 'text-gray-500'"
@@ -619,6 +619,11 @@ watch(() => color_secundario.value, (nuevoColorSecundario) => {
     background-clip: text;
     color: transparent;
     font-weight: 600;
+}
+
+*{
+
+  
 }
 
 
