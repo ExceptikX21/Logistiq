@@ -1,24 +1,31 @@
 const express = require('express');
 const router = express.Router();
 const verificarLicencia = require('../middlewares/verifyLicense');
+
+
 const { rolesAdmin, rolesPro, rolesAll } = require('../helpers/roles');
 
 const attachDbHybrid = require('../middlewares/attachDbHybrid'); // middleware para asignar la base de datos correcta
 
 const verifyToken = require('../middlewares/verifyToken');
-const verificarRol = require('../middlewares/verificationRol');
+
 
 console.log(typeof verificarRol); // debe imprimir "function"
 
 
 const { getEmpresaDb } = require('../connecThis');
+const verificationRol = require('../middlewares/verificationRol');
 
 router.use(verifyToken); // siempre primero verificar el token
 router.use(verificarLicencia); // verificar licencia antes de cualquier operación
 
 // Obtener todos los proveedores con paginación
 
-router.get('/', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req, res) => {
+router.get('/', verifyToken, verificationRol(rolesAll), attachDbHybrid,  async (req, res) => {
+
+  console.log('🧠 ENTRANDO A /proveedores');
+  console.log('Rol real:', req.user?.rol);
+
   const { page = 1, limit = 10 } = req.query;
   const offset = (page - 1) * limit;
   const empresa_id = req.user.empresa_id;
@@ -72,7 +79,7 @@ router.get('/', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req,
 
 // Buscar proveedores
 // Buscar proveedores
-router.get('/search', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req, res) => {
+router.get('/search', verifyToken, attachDbHybrid, verificationRol(rolesAll),  async (req, res) => {
   const { query, page = 1, limit = 10 } = req.query;
   if (!query) return res.status(400).json({ error: 'Query parameter is required' });
 
@@ -119,7 +126,7 @@ router.get('/search', verifyToken, attachDbHybrid, verificarRol(rolesAll), async
 });
 
 // Crear proveedor
-router.post('/', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req, res) => {
+router.post('/', verifyToken, attachDbHybrid, verificationRol(rolesAll),  async (req, res) => {
   const { nombre, contacto, telefono, email, direccion } = req.body;
 
   try {
@@ -155,8 +162,9 @@ router.post('/', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req
 router.put(
   '/:id',
   verifyToken,
+  verificationRol(rolesAdmin), // Verificar rol de usuario
   attachDbHybrid, // ✅ Middleware para asignar la DB correcta y empresa_id
-  verificarRol(rolesAdmin),
+ 
   async (req, res) => {
     const { id } = req.params;
     const { nombre, contacto, telefono, email, direccion, updated_at, activo } = req.body;
@@ -226,7 +234,7 @@ router.put(
 
 
 // Eliminar proveedor
-router.delete('/:id', verifyToken, verificarLicencia, verificarRol(rolesAdmin), async (req, res) => {
+router.delete('/:id', verifyToken, verificationRol(rolesAdmin), attachDbHybrid, verificarLicencia, async (req, res) => {
   const { id } = req.params;
   const empresa_id = req.user.empresa_id;
   const tipo_acceso = req.tipo_acceso;

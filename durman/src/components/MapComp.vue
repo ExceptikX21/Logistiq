@@ -16,23 +16,23 @@
 
 
         </div>
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto p-0">
       <header class="text-center mb-8">
      
       </header>
 
       <main>
         <section class="mb-8">
-          <div class=" p-6 rounded-lg shadow-md">
-            <h2 class="text-xl font-bold mb-4">Visualización de Almacenes</h2>
+          <div class=" p-2 rounded-lg shadow-md">
+
 
             <div class="Croquis">
               <div class="warehouse-map">
-                <svg viewBox="0 0 800 400" class="map-svg">
+                <svg viewBox="0 0 800 700" class="map-svg">
                   <!-- Fondo cuadriculado -->
                   <defs>
                     <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#ccc" stroke-width="0.3" />
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="var(--color-principal)" stroke-width="0.5" />
                     </pattern>
                   </defs>
                   <rect width="100%" height="100%" fill="url(#grid)" />
@@ -115,7 +115,7 @@
   class=" text-white rounded-full left-1/2 transform -translate-x-1/2 bottom-16 absolute w-14 h-14 shadow-lg hover:bg-blue-700 text-2xl flex items-center justify-center "
   title="Registrar producto en almacén"
 >
-  <i class="fas fa-plus"></i>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-open-icon lucide-package-open"><path d="M12 22v-9"/><path d="M15.17 2.21a1.67 1.67 0 0 1 1.63 0L21 4.57a1.93 1.93 0 0 1 0 3.36L8.82 14.79a1.655 1.655 0 0 1-1.64 0L3 12.43a1.93 1.93 0 0 1 0-3.36z"/><path d="M20 13v3.87a2.06 2.06 0 0 1-1.11 1.83l-6 3.08a1.93 1.93 0 0 1-1.78 0l-6-3.08A2.06 2.06 0 0 1 4 16.87V13"/><path d="M21 12.43a1.93 1.93 0 0 0 0-3.36L8.83 2.2a1.64 1.64 0 0 0-1.63 0L3 4.57a1.93 1.93 0 0 0 0 3.36l12.18 6.86a1.636 1.636 0 0 0 1.63 0z"/></svg>
 </button>
                 
                   <div style="background-color: var(--color-principal);" class="mt-4  text-white p-3 rounded">
@@ -127,53 +127,184 @@
     
   </div>
 
-                <!-- Modal de detalles -->
-                <div v-if="selectedWarehouse" class=" modal-overlay" @click.self="selectedWarehouse = null">
-                  <div class="modal">
+<!-- Modal de detalles -->
+<div
+  v-if="selectedWarehouse"
+  class="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4"
+  @click.self="selectedWarehouse = null"
+>
+  <div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl p-6 overflow-auto max-h-[90vh]">
+    
+    <!-- Header -->
+    <div class="flex items-start justify-between border-b pb-4 mb-6">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-warehouse text-blue-600 text-2xl bg-blue-100 p-2 rounded border"></i>
+        <div>
+          <h2 class="text-xl font-bold text-gray-800 uppercase">
+            {{ selectedWarehouse.nombre }}
+          </h2>
+          <p class="text-sm text-gray-500">{{ selectedWarehouse.zona || 'Warehouse Zone' }}</p>
+        </div>
+      </div>
+      <button
+        @click="selectedWarehouse = null"
+        class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1.5 rounded-lg text-sm transition"
+      >
+        Cerrar
+      </button>
+    </div>
 
-                    <div class="flex w-full items-center justify-end" >
+    <!-- KPIs -->
+    <div class="grid grid-cols-3 gap-6 text-center mb-8">
+      <!-- Total productos -->
+      <div>
+        <div class="flex justify-center items-center gap-2 text-xs text-gray-600 mb-1">
+          <i class=" p-1 bg-blue-100 border rounded">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide text-blue-600 lucide-package-icon lucide-package"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><polyline points="3.29 7 12 12 20.71 7"/><path d="m7.5 4.27 9 5.15"/></svg>
+      </i>
+          <span class="font-semibold">Productos</span>
+        </div>
+        <p class="text-lg font-bold text-blue-600"> {{ selectedWarehouse.productos.length }}</p>
+      </div>
 
-                      <button @click="selectedWarehouse = null" class=" bg-gray-400 text-white px-4 py-2 rounded ">Cerrar</button>
+      <!-- Capacidad -->
+      <div>
+        <div class="flex justify-center items-center gap-2 text-xs text-gray-600 mb-1">
+          <i class=" p-1 bg-blue-100 border rounded"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trending-up h-4 w-4 text-green-600" data-lov-id="src/components/StockOverlay.tsx:57:18" data-lov-name="TrendingUp" data-component-path="src/components/StockOverlay.tsx" data-component-line="57" data-component-file="StockOverlay.tsx" data-component-name="TrendingUp" data-component-content="%7B%22className%22%3A%22h-4%20w-4%20text-green-600%22%7D"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline></svg></i>
+          <span class="font-semibold">Capacidad</span>
+        </div>
+        <p class="text-lg font-bold text-green-600">{{ selectedWarehouse.capacidad_maxima || '∞' }}</p>
+      </div>
 
-                    </div>
+      <!-- Utilizado -->
+      <div>
+        <div class="flex justify-center items-center gap-2 text-xs text-gray-600 mb-1">
+          <i class="p-1 bg-blue-100 border rounded"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-x-icon text-purple-600 lucide-package-x"><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/><path d="m17 13 5 5m-5 0 5-5"/></svg></i>
+          <span class="font-semibold">Utilizado</span>
+        </div>
+        <p>
+          <span
+    class="inline-block px-3 py-0.5 bg-red-100 text-purple-600 text-sm font-semibold rounded-full">
+    {{ selectedWarehouse.totalStock }} / {{ selectedWarehouse.capacidad_maxima || '∞' }} 
+    ({{ calcularPorcentajeUso(selectedWarehouse.totalStock, selectedWarehouse.capacidad_maxima) }})
+  </span>
+        </p>
+      </div>
+    </div>
 
+    <!-- Inventario -->
+    <div>
+      <h3 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-4">Inventario en almacén</h3>
 
-
-                    <h2>{{ selectedWarehouse.nombre.toUpperCase() }}</h2>
-                    
-                    <ul>
-<!-- En tu modal de detalles (dentro del li que muestra los productos) -->
-<li v-for="(item, i) in selectedWarehouse.productos" :key="i">
-  
-  {{ item.name }}
-  <span v-if="item.quantity > 0">- Cantidad: {{ item.quantity }}</span>
-  <span  v-else>Sin cantidad disponible</span>  
-
- 
-
-  
-  <button 
-    @click.stop="deleteProductFromWarehouse(item.stock_id, selectedWarehouse.id)"
-    class="text-red-600 text-sm ml-28"
-
+      <div
+        v-for="(item, i) in selectedWarehouse.productos"
+        :key="i"
+        class="bg-gray-50 border rounded-lg p-4 mb-3 shadow-sm"
+      >
+        <div class="flex justify-between items-center mb-1">
+          <h4 class="text-gray-800 font-medium">
+            {{ item.name }}
+            <span
+              v-if="item.categoria"
+              class="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700"
+            >
+              {{ item.categoria }}
+            </span>
+          </h4>
+          <div class="flex gap-2">
+  <!-- Editar -->
+  <button
     v-if="item.quantity > 0"
-    title="Eliminar producto del almacén"
+    @click.stop="editProductInWarehouse(item.stock_id, selectedWarehouse.id)"
+    class="text-blue-600 hover:text-blue-800 transition"
+    title="Editar producto"
   >
- <i class="fas fa-trash-alt"></i>
+    <i class="fas fa-edit"></i>
   </button>
-</li>
-                    </ul>
+
+  <!-- Eliminar -->
+  <button
+    v-if="item.quantity > 0"
+    @click.stop="deleteProductFromWarehouse(item.stock_id, selectedWarehouse.id)"
+    class="text-red-600 hover:text-red-800 transition"
+    title="Eliminar producto"
+  >
+    <i class="fas fa-trash-alt"></i>
+  </button>
+</div>
+<!-- Modal de edición -->
+<div
+  v-if="productoEditando"
+  class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center p-4"
+  @click.self="productoEditando = null"
+>
+  <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
+    <h3 class="text-lg font-bold mb-4">Editar producto: {{ productoEditando.name }}</h3>
+
+    <label class="block mb-2 text-sm font-medium">Cantidad nueva</label>
+    <input
+      v-model="productoEditando.quantity"
+      type="number"
+      min="0"
+      class="w-full border rounded px-3 py-2 mb-4"
+    />
+
+    <div class="flex justify-end gap-2">
+      <button
+        @click="productoEditando = null"
+        class="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+      >Cancelar</button>
+      <button
+        @click="guardarEdicionProducto"
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >Guardar</button>
+    </div>
+  </div>
+</div>
 
 
-                    <div class="flex justify-between mt-4"> 
-                      <p>Total stock: {{ selectedWarehouse.totalStock }}</p>
+        </div>
 
-                      <button @click="deleteWarehouse(selectedWarehouse.id)" class="text-red-600  border border-red-600 px-4 py-2 rounded ">Eliminar almacén</button>
-                    </div>
+        <p class="text-sm text-gray-600">
+          Stock: 
+          <span v-if="item.quantity > 0">{{ item.quantity }} / {{ selectedWarehouse.capacidad_maxima || '∞' }}</span>
+          <span v-else class="text-red-500">Sin cantidad disponible</span>
+        </p>
 
-                 
-                  </div>
-                </div>
+        <!-- Barra de progreso -->
+        <div v-if="item.quantity && item.capacidad" class="mt-2">
+          <div class="flex justify-between text-xs text-gray-500 mb-1">
+            <span>Fill Level: {{ Math.round((item.quantity / item.capacidad) * 100) }}%</span>
+            <span v-if="(item.quantity / item.capacidad) * 100 > 100" class="text-orange-600 font-semibold">
+              Near Full
+            </span>
+          </div>
+          <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div
+              class="h-2 bg-orange-500 rounded-full transition-all"
+              :style="{ width: Math.min((item.quantity / item.capacidad) * 100, 100) + '%' }"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex justify-between items-center mt-8 pt-4 border-t">
+      <p class="text-gray-700 font-medium">
+        Total stock: {{ selectedWarehouse.totalStock }}
+      </p>
+      <button
+        @click="deleteWarehouse(selectedWarehouse.id)"
+        class="text-red-600 border border-red-600 px-4 py-2 rounded hover:bg-red-50 transition"
+      >
+        Eliminar almacén
+      </button>
+    </div>
+  </div>
+</div>
+
+
 
                 <div class="legend">
                   <p><span class="legend-line solid"></span> Stock Óptimo</p>
@@ -297,14 +428,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed,watch } from 'vue';
 import api from '@/services/api';
+
 
 import Swal from 'sweetalert2';
 
 const warehouses = ref([]);
 const selectedWarehouse = ref(null);
 const showRegisterModal = ref(false)
+const productoEditando = ref(null)
 
 const newStock = ref({
   almacen_id: '',
@@ -321,6 +454,56 @@ const newWarehouse = ref({
   tipo: 'normal',
 });
 const dron = ref({ x: 100, y: 100, z: 3 });
+
+
+const editProductInWarehouse = (stock_id, almacen_id) => {
+  const producto = selectedWarehouse.value.productos.find(p => p.stock_id === stock_id)
+  if (producto) {
+    productoEditando.value = { ...producto, almacen_id } // duplicamos para no editar en vivo
+  }
+}
+
+
+const calcularPorcentajeUso = (actual, maximo) => {
+  if (!maximo || maximo === 0) return '∞%';
+  const porcentaje = (actual / maximo) * 100;
+  return `${porcentaje.toFixed(1)}%`; // redondea a un decimal
+};
+const guardarEdicionProducto = async () => {
+  try {
+    const {  producto_id, quantity } = productoEditando.value
+
+    const almacen_id = selectedWarehouse.value.id
+
+    await api.put('/api/stock_almacen', {
+      almacen_id,
+      producto_id,
+      cantidad: quantity
+    
+    }
+  ,
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+  }
+  )
+
+    // Refrescar visualmente el valor editado
+    const index = selectedWarehouse.value.productos.findIndex(
+      p => p.stock_id === productoEditando.value.stock_id
+    )
+    if (index !== -1) {
+      selectedWarehouse.value.productos[index].quantity = quantity
+    }
+
+    productoEditando.value = null
+  } catch (err) {
+    console.error('Error al actualizar producto:', err)
+    alert('No se pudo guardar la cantidad editada')
+  }
+}
+
 
 const fetchWarehouses = async () => {
 
@@ -383,7 +566,16 @@ const fetchWarehouses = async () => {
         }
   }
 };
+
+
+
+
+
+
 const zonaActual = computed(() => {
+
+
+  
   const zona = warehouses.value.find(w =>
     dron.value.x >= w.x &&
     dron.value.x <= w.x + w.width &&
@@ -413,6 +605,11 @@ function checkDroneOverlap() {
   // Si no está sobre ninguno, lo cierra
   selectedWarehouse.value = null;
 }
+
+
+watch(selectedWarehouse, (val) => {
+  console.log('Productos del almacén:', val?.productos)
+})
 const registrarProducto = async () => {
 
   const token = localStorage.getItem('token');
@@ -624,7 +821,8 @@ onMounted(() => {
   width: 100%;
   height: auto;
   background-color: var(--bg);
-  border: 1px solid #ccc;
+  border: 1px solid var(--text);
+  border-radius: 20px;
 }
 
 .line-solid {

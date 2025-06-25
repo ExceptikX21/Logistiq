@@ -503,6 +503,9 @@ desconectarObserver() {
     // Agrega el nuevo movimiento (ya viene con firma desde el backend)
     this.movimientos.push(response.data);
 
+    // actualiza los movimientos
+    this.obtainMovements();
+
     // Limpia el formulario
     this.form = {
       producto: "",
@@ -512,6 +515,11 @@ desconectarObserver() {
       motivo: "",
       fecha: new Date().toISOString(),
     };
+
+    // Oculta el formulario
+    this.showForm = false;
+    // Muestra mensaje de éxito
+
 
     Swal.fire({
       icon: 'success',
@@ -524,7 +532,7 @@ desconectarObserver() {
     Swal.fire({
       icon: 'error',
       title: 'Error',
-      text: 'No se pudo registrar el movimiento. Intente nuevamente.',
+      text: 'No se pudo registrar el movimiento. Intente nuevamente, verifique que los datos sean correctos.',
       confirmButtonText: 'Aceptar'
     });
 

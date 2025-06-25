@@ -29,7 +29,7 @@
           
           <span v-else class="text-red-600  font-bold" >ELIMINO</span> un producto</p>
         <p><strong>📦 Producto ID:</strong> #{{ log.producto_id }}</p>
-        <p><strong>🌐 IP:</strong> {{ log.ip }}</p>
+        <p><strong>🌐 IP:</strong> 123.456.7.8</p>
 
       </div>
 

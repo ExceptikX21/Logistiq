@@ -13,10 +13,10 @@ const { rolesPro } = require('../helpers/roles');
 const express = require('express');
 const router = express.Router();
 router.use(verifyToken); // siempre primero verificar el token
-router.use(verificarRol(rolesPro)); // aplicar verificación de rol global
+// aplicar verificación de rol global
 router.use(verificarLicencia); // verificar licencia
 
-router.get('/logxas', verifyToken, attachDbHybrid, async (req, res) => {
+router.get('/logxas', verificarRol(rolesPro), verifyToken, attachDbHybrid, async (req, res) => {
     try {
       const empresa_id = req.empresa_id;  // o req.user.empresa_id si así lo tienes definido
       const db = req.db;

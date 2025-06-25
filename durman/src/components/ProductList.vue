@@ -39,15 +39,7 @@
           </div>
         </div>
   
-        <div>
-          <h2 class="font-semibold  mb-2">Rango de Precio</h2>
-          <!-- Placeholder for range slider -->
-          <div class="flex items-center space-x-2">
-            <span>$0</span>
-            <input type="range" min="0" max="350" class="w-full" />
-            <span>$350</span>
-          </div>
-        </div>
+
   
         <div>
           <h2 class="font-semibold  mb-2">Estado de Stock</h2>

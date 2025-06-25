@@ -15,23 +15,23 @@ const router = express.Router();
 
 
 router.use(verifyToken); // siempre primero verificar el token
-router.use(verificarRol(rolesPro)); // aplicar verificación de rol glob  al
 router.use(verificarLicencia); // verificar licencia
 
-router.get('/api/almacenes', verifyToken, attachDbHybrid, async (req, res) => {
+router.get('/api/almacenes', verificarRol(rolesPro), verifyToken, attachDbHybrid, async (req, res) => {
     try {
       let query = `
         SELECT 
           a.id AS id,
           a.nombre AS nombre,
-          a.x, a.y, a.width, a.height, a.path, a.tipo,
+          a.x, a.y, a.width, a.height, a.path, a.tipo, a.capacidad_maxima,
           COALESCE(SUM(sa.cantidad), 0) AS totalStock,
           COALESCE(
             JSON_ARRAYAGG(
               JSON_OBJECT(
                 'name', p.nombre,
                 'quantity', sa.cantidad,
-                'stock_id', sa.id
+                'stock_id', sa.id,
+                 'producto_id', sa.producto_id
               )
             ), 
             JSON_ARRAY()
@@ -72,7 +72,7 @@ router.get('/api/almacenes', verifyToken, attachDbHybrid, async (req, res) => {
   
   
   // POST /api/almacenes
-  router.post('/api/almacenes', verifyToken, attachDbHybrid,  async (req, res) => {
+  router.post('/api/almacenes', verificarRol(rolesPro), verifyToken, attachDbHybrid,  async (req, res) => {
     const { nombre, x, y, width, height, tipo } = req.body;
   
     // Validación de campos obligatorios
@@ -115,7 +115,7 @@ router.get('/api/almacenes', verifyToken, attachDbHybrid, async (req, res) => {
   });
   
   // DELETE /api/stock_almacen/:id
-  router.delete('/api/stock_almacen/:id', verifyToken, attachDbHybrid,  async (req, res) => {
+  router.delete('/api/stock_almacen/:id',verificarRol(rolesPro), verifyToken, attachDbHybrid,  async (req, res) => {
     const stockId = req.params.id;
   
     try {
@@ -168,7 +168,7 @@ router.get('/api/almacenes', verifyToken, attachDbHybrid, async (req, res) => {
   });
   
   // DELETE /api/almacenes/:id
-  router.delete('/api/almacenes/:id', verifyToken, attachDbHybrid, async (req, res) => {
+  router.delete('/api/almacenes/:id', verifyToken, verificarRol(rolesPro), attachDbHybrid, async (req, res) => {
     const id = req.params.id;
   
     try {
@@ -215,7 +215,7 @@ router.get('/api/almacenes', verifyToken, attachDbHybrid, async (req, res) => {
   });
   
   // Crear stock en almacén
-  router.post('/api/stock_almacen', verifyToken, attachDbHybrid, async (req, res) => {
+  router.post('/api/stock_almacen', verifyToken, verificarRol(rolesPro), attachDbHybrid, async (req, res) => {
     const { almacen_id, producto_id, cantidad } = req.body;
   
     // Validación mejorada
@@ -292,6 +292,38 @@ router.get('/api/almacenes', verifyToken, attachDbHybrid, async (req, res) => {
         error: errorMessage,
         details: process.env.NODE_ENV === 'development' ? err.message : undefined
       });
+    }
+  });
+
+
+  // Actualizar stock en almacén
+  router.put('/api/stock_almacen', verifyToken, verificarRol(rolesPro), attachDbHybrid, async (req, res) => {
+    const { almacen_id, producto_id, cantidad } = req.body;
+  
+    // Validación mejorada
+    if (!almacen_id || !producto_id || cantidad == null || isNaN(cantidad) || cantidad < 0) {
+      return res.status(400).json({ 
+        error: "Datos inválidos. Asegúrese de proporcionar almacen_id, producto_id y cantidad válida." 
+      });
+    }
+  
+    // Actualizar stock
+    try {
+      const [results] = await req.db.query(
+        'UPDATE stock_almacen SET cantidad = ? WHERE almacen_id = ? AND producto_id = ?',
+        [cantidad, almacen_id, producto_id]
+      );
+      
+      res.json({ 
+        success: true,
+        message: results.affectedRows > 0 ? 
+          'Stock actualizado correctamente' : 
+          'Producto registrado en almacén correctamente',
+        action: results.affectedRows > 0 ? 'updated' : 'created'
+      });
+    } catch (err) {
+      console.error('Error al actualizar stock:', err);
+      res.status(500).json({ error: 'Error al actualizar el stock' });
     }
   });
 

@@ -8,7 +8,6 @@ const verificarRol = require('../middlewares/verificationRol');
 const { getEmpresaDb } = require('../connecThis');
 const verifyToken = require('../middlewares/verifyToken');
 router.use(verifyToken); // siempre primero verificar el token
-router.use(verificarRol(['admin'])); // aplicar verificación de rol global
 const {  rolesPro} = require('../helpers/roles');
 
 

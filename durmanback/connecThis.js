@@ -14,6 +14,10 @@ const db = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   port: process.env.DB_PORT,
+  connectionLimit: 10,        // 🔥 Limita cuántas conexiones simultáneas puede usar el pool
+  waitForConnections: true,   // ✅ Hace que las peticiones esperen en cola si el pool está lleno
+  queueLimit: 0  ,
+   timezone: 'America/Bogota' // ✅ Configura la zona horaria para las conexiones
 });
 
 async function getEmpresaDb(empresa_id) {

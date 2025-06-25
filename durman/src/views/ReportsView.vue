@@ -1,10 +1,30 @@
 <template>
 
   <div class="container">
+    
     <img alt="A motocross rider in action on a dirt track" class="background-image" src="https://durman.com.co/wp-content/uploads/2023/05/riego-por-goteo.jpg"/>
     <div class="overlay"></div>
+    <a
+          style="background-color: var(--bg); color: var(--text);"
+        
+          class="  mr-8 left-8 cursor-pointer bg-gray-600 hover:bg-gray-700  top-6 ml-10 relative text-white font-semibold py-2 px-4 rounded-2xl shadow-md transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          @click="$router.go(-1)"
+        >
+          ← Back
+        </a>
+        
     <div class="content">
+      
+
+    
+          
+
+
+        
+
+                
       <h2 class="title">Descarga de reportes</h2>
+      
       <h1 class="headline">
         Reportes en volumen,
         <span>Reportes unitarios</span>

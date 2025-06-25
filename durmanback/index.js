@@ -31,7 +31,7 @@ const socketIo = require("socket.io");
 const cors = require('cors');
 const { error, log } = require('console');
 const ExcelJS = require('exceljs');
-const proveedoresRouter = require('./routes/proveedores');
+const proveedoresRouter = require('./routes/proveedores.js');
 const configprofileRouter = require('./routes/configprofile');
 
 
@@ -394,7 +394,7 @@ const attachDbHybrid = require('./middlewares/attachDbHybrid'); // middleware pa
 
     
         
-    app.post('/imanigas/single', verifyToken, verificarRol([rolesAdmin]),upload.single('imageProduct'), async (req, res) => {
+    app.post('/imanigas/single', verifyToken, verificarRol(rolesAdmin), upload.single('imageProduct'), async (req, res) => {
         
       const empresa_id = req.user.empresa_id;
       if (!req.file) return res.status(404).send('No se subió ningún archivo.');

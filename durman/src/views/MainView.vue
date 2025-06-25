@@ -5,14 +5,14 @@
     <!-- Header -->
     <div class="header-main fixed w-full top-0 z-10 bg-white shadow-lg  alegreya-sc-regular rounded-b-2xl">
       <div class="max-w-7xl mx-auto h-20 px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-bold text-gradient sedgwick-ave-display-regular">LogistIQ</div>
+        <div class="text-2xl font-bold text-blue-900 sedgwick-ave-display-regular">LogistIQ</div>
         <nav class="space-x-6 text-sm hidden md:block">
-          <a href="#features" class="text-gray-900 hover:text-blue-900 font-medium transition">Características</a>
-          <a href="#demo" class="text-gray-900 hover:text-blue-900 font-medium transition">Demo</a>
+          <a  href ="features" class="text-gray-900 hover:text-blue-900 font-medium transition">Características</a>
+          <a href="demo" class="text-gray-900 hover:text-blue-900 font-medium transition">Demo</a>
           <a href="#testimonials" class="text-gray-900 hover:text-blue-900 font-medium transition">Clientes</a>
           <a href="#cta" class="bg-gradient-to-r from-blue-500 to-gray-500 text-white px-4 py-2 rounded-full  hover:from-blue-900 hover:to-gray-900 shadow-lg transition font-semibold"
           
-          >Empezar</a>
+          ><i class="fa-solid fa-rocket"></i></a>
         </nav>
       </div>
     </div>
@@ -22,7 +22,7 @@
 
     <!-- Hero -->
     <section  class="bg-gradient-to-r from-blue-900 to-gray-900 text-white py-20 px-6 mb-0 text-center rounded-b-3xl shadow-lg h-100">
-      <h1 class="text-6xl md:text-8xl font-bold mb-2 sedgwick-ave-display-regular drop-shadow-lg uppercase mt-8">LogistIQ</h1>
+      <h1 style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" class="text-6xl md:text-8xl font-bold mb-2 drop-shadow-lg uppercase mt-8">LogistIQ</h1>
      
      
      <TextWritter class="text-xs md:text-2xl   font-bold  mb-4 alegreya-sc-regular drop-shadow-lg"></TextWritter>
@@ -41,10 +41,10 @@
 
     <!-- Features -->
     <section id="features"   class="py-10 mt-0 px-6 max-w-7xl mx-auto  alegreya-sc-regular">
-      <h2 style="color:#002363" class="text-4xl font-bold text-center  mb-20 sedgwick-ave-display-regular" >¿Por qué LogistIQ?</h2>
+      <h2 style="color:#002363 ; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;" class="text-4xl font-bold text-center  mb-20 "  >¿Por qué LogistIQ?</h2>
 
 
-      <section ref="triggerSection" class="parallax-container w-full p-0 m-0">
+      <section id="features" ref="triggerSection" class="parallax-container w-full p-0 m-0">
   <div id="parallax" class="parallax-item">
     <div class="text-center p-6 bg-white rounded-xl shadow-md hover:shadow-xl transition">
           <div class="text-blue-900 mb-4 text-4xl">
@@ -150,16 +150,77 @@
     </section>
 
     <!-- Visual Demo -->
-    <section id="demo" class="bg-gray-50 py-16 px-6">
-      <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-        <img src="https://images.pexels.com/photos/31781189/pexels-photo-31781189/free-photo-of-faro-naranja-brillante-contra-montanas-nevadas.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Demo del sistema" class="rounded-3xl shadow-xl transform hover:scale-105 transition" />
-        <div>
-          <h2 class="text-3xl font-bold mb-4">Diseñado para la eficiencia</h2>
-          <p class="mb-6">Nuestra interfaz moderna está optimizada para minimizar errores, mejorar la productividad y adaptarse a cualquier dispositivo.</p>
-          <button class="bg-gradient-to-r from-blue-500 to-gray-500 text-white px-5 py-3 rounded-full hover:from-blue-900 hover:to-gray-900 shadow-lg transition font-semibold">Solicitar una demo</button>
-        </div>
-      </div>
-    </section>
+    <section id="demo" class="bg-gray-50 py-20 px-6">
+      <section class="bg-white py-20 px-6">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-14 items-center">
+    <div class="overflow-hidden rounded-3xl shadow-2xl">
+      <img
+        src="/img/demo/login-dashboard.jpg"
+        alt="Dashboard LogistIQ"
+        class="w-full h-auto object-cover transform hover:scale-105 transition duration-500 ease-in-out"
+      />
+    </div>
+    <div>
+      <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Controla tu inventario, sin complicaciones</h2>
+      <p class="text-gray-600 text-lg mb-8">
+        LogistIQ es un sistema logístico con IA, diseñado para digitalizar el control de inventario, ingreso de productos y gestión de stock en tiempo real. Su interfaz intuitiva te permite trabajar desde cualquier dispositivo, sin curva de aprendizaje.
+      </p>
+      <button class="bg-gradient-to-r from-blue-600 to-gray-700 text-white px-6 py-3 rounded-full shadow-lg transition-all duration-300 font-medium text-lg">
+        Ver demo
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="bg-gray-50 py-20 px-6">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-14 items-center">
+    <div class="md:order-2 overflow-hidden rounded-3xl shadow-2xl">
+      <img
+        src="/img/demo/chatbot-producto.jpg"
+        alt="Funciones inteligentes LogistIQ"
+        class="w-full h-auto object-cover transform hover:scale-105 transition duration-500 ease-in-out"
+      />
+    </div>
+    <div class="md:order-1">
+      <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Funciones inteligentes, sin esfuerzo humano</h2>
+      <p class="text-gray-600 text-lg mb-8">
+        Escanea productos con código de barras, registra entradas manuales, automatiza pedidos con stock bajo y recibe asistencia en tiempo real con un chatbot entrenado para tu operación. Todo en una plataforma ligera y personalizable.
+      </p>
+      <button class="bg-white text-blue-600 px-6 py-3 rounded-full shadow-lg transition-all duration-300 font-medium text-lg">
+        Explorar funciones
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-20 px-6">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-14 items-center">
+    <div class="overflow-hidden rounded-3xl shadow-2xl">
+      <img
+        src="/img/demo/multiempresa-roles.jpg"
+        alt="Multiempresa LogistIQ"
+        class="w-full h-auto object-cover transform hover:scale-105 transition duration-500 ease-in-out"
+      />
+    </div>
+    <div>
+      <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Pensado para crecer contigo</h2>
+      <p class="text-gray-600 text-lg mb-8">
+        LogistIQ funciona en modo multiempresa: puedes gestionar múltiples compañías desde una misma instancia, con bases de datos aisladas o compartidas según el tamaño de tu operación. Soporta usuarios con roles, alertas y reportes a nivel ejecutivo.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+</section>
+
+
+<section
+id="features" class="py-0 px-6 bg-white">
+
+<PayView></PayView>
+</section>
 
   
   <section id="testimonials" class="py-16 px-6 bg-white overflow-hidden">
@@ -230,10 +291,11 @@
 import TextWritter from '@/components/TextWritter.vue';
 import { ref, onMounted, onBeforeUnmount, computed  } from 'vue';
 const chatContainer = ref(null);
+import PayView from '@/views/PayView.vue';
 let observer = null;
 const triggerSection = ref(null)
 const isFixed = ref(false)
-import animationData from '@/assets/animaciones/confianza.json' // tu animación JSON
+import animationData from '@/assets/animaciones/opti.json' // tu animación JSON
 import animationDataControl from '@/assets/animaciones/5eb520b4-eee9-49f7-8a62-f40735243cb1.json'
 import animationDataInteligencia from '@/assets/animaciones/Corex.json'
 import animationDataRendimiento from '@/assets/animaciones/rendimiento.json'
@@ -418,7 +480,7 @@ window.addEventListener("scroll", function () {
   };
 
   const getRandomSpeed = () => {
-    return Math.floor(Math.random() * 50) + 20; // Velocidad variable entre 20-70ms
+    return Math.floor(Math.random() * 5) + 10; // Velocidad variable entre 20-70ms
   };
 
   // Iniciar el primer mensaje
@@ -462,8 +524,11 @@ html {
 }
 
 .parallax-item:first-child {
-  background: url("https://images.unsplash.com/photo-1675050757561-741bd739bc06?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background: url("https://img.freepik.com/vector-gratis/plantilla-marco-curva-azul_53876-116707.jpg");
   background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax Effect for DIV 3 */
+  min-height: 600px;
   
  backdrop-filter: blur(10px);
   
@@ -475,7 +540,7 @@ html {
 
 
 .parallax-item:nth-child(3) {
-  background: url("https://images.unsplash.com/photo-1643228995868-bf698f67d053?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background: url("https://img.freepik.com/vector-gratis/plantilla-marco-curva-azul-oscuro-gris_53876-114604.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Parallax Effect for DIV 3 */
@@ -491,7 +556,7 @@ html {
 
 
 .parallax-item:nth-child(5) {
-  background: url("https://images.pexels.com/photos/14805032/pexels-photo-14805032.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background: url("https://img.freepik.com/vector-gratis/onda-abstracta-moderna-azul-sobre-fondo-geometrico_1055-3203.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Parallax Effect for DIV 3 */

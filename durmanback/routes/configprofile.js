@@ -10,7 +10,6 @@ const verificarLicencia = require('../middlewares/verifyLicense');
 const { rolesPro } = require('../helpers/roles');
 
 router.use(verifyToken); // siempre primero verificar el token
-router.use(verificarRol(rolesPro)); // aplicar verificación de rol global
 router.use(verificarLicencia); // verificar licencia
 router.get("/",  verifyToken , async (req, res) => {
 
@@ -41,7 +40,7 @@ router.get("/",  verifyToken , async (req, res) => {
     }   
     
 });
-router.put("/color", verificarLicencia, verifyToken, verificarLicencia, async (req, res) => {
+router.put("/color", verificarLicencia, verificarRol(rolesPro), verifyToken, verificarLicencia, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const { color_primario, color_secundario } = req.body; // Recibir ambos colores
@@ -129,7 +128,7 @@ router.put("/color", verificarLicencia, verifyToken, verificarLicencia, async (r
 });
 
 
-router.put("/logo", verificarLicencia, verifyToken, async (req, res) => {
+router.put("/logo", verificarLicencia, verificarRol(rolesPro), verifyToken, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const { logo } = req.body; // Recibir ambos colores
@@ -187,7 +186,7 @@ router.put("/logo", verificarLicencia, verifyToken, async (req, res) => {
         });
     }
 }); 
-router.delete('/logo', verificarLicencia, verifyToken, async (req, res) => {
+router.delete('/logo', verificarLicencia, verificarRol(rolesPro), verifyToken, async (req, res) => {
     const empresa_id = req.user.empresa_id;
   
     // Conexión a la base de datos
@@ -241,7 +240,7 @@ router.delete('/logo', verificarLicencia, verifyToken, async (req, res) => {
   });
 
   
-router.put("/companyname", verifyToken, verificarLicencia, async (req, res) => {
+router.put("/companyname", verifyToken, verificarRol(rolesPro), verificarLicencia, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const {  nombre_empresa } = req.body; // Recibir ambos colores
@@ -283,7 +282,7 @@ router.put("/companyname", verifyToken, verificarLicencia, async (req, res) => {
   });
 
 
-  router.put("/stock", verificarLicencia, verifyToken, async (req, res) => {
+  router.put("/stock", verificarLicencia, verificarRol(rolesPro), verifyToken, async (req, res) => {
     try {
         const empresa_id = req.user.empresa_id;
         const { stock_minimo_global } = req.body;

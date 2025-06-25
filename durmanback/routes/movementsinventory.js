@@ -18,12 +18,12 @@ const router = express.Router();
 
 
 router.use(verifyToken); // siempre primero verificar el token
-router.use(verificarRol(rolesPro)); // aplicar verificación de rol global
+ // aplicar verificación de rol global
 router.use(verificarLicencia); // verificar licencia
 
 
 
-router.get('/', verifyToken, attachDbHybrid, async (req, res) => {
+router.get('/', verifyToken, verificarRol(rolesPro), attachDbHybrid, async (req, res) => {
   try {
       const empresa_id = req.user.empresa_id;
       const db = req.db || await getEmpresaDb(empresa_id);
@@ -67,7 +67,7 @@ router.get('/', verifyToken, attachDbHybrid, async (req, res) => {
   }
 });
 
-router.post('/create', verifyToken, attachDbHybrid, verificarRol(['admin']), async (req, res) => {
+router.post('/create', verifyToken, attachDbHybrid, verificarRol(rolesPro), async (req, res) => {
     const empresa_id = req.user.empresa_id;
     const db = req.db || await getEmpresaDb(empresa_id);
     const { producto_id, tipo, cantidad, motivo } = req.body;

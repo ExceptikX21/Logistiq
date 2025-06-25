@@ -245,82 +245,93 @@ const fecha =  new Date().toISOString().slice(0, 19).replace('T', ' ');
   });
 
 // Update product
-router.put('/products/:id', verifyToken, attachDbHybrid,  verificarRol(rolesAdmin), async (req, res) => {
-    try {
-        const empresa_id = req.empresa_id;
-        const productId = req.params.id;
-        const { nombre, descripcion, cantidad, imagen, updated_at } = req.body;
-        const username = req.user.username;
-        const db = req.db;
+router.put('/products/:id', verifyToken, attachDbHybrid, verificarRol(rolesAdmin), async (req, res) => {
+  try {
+    const empresa_id = req.empresa_id;
+    const productId = req.params.id;
+    const { nombre, descripcion, cantidad, imagen, version } = req.body;
+    const username = req.user.username;
+    const db = req.db;
 
-        if (!nombre || !descripcion || cantidad === undefined || !updated_at) {
-            return res.status(400).json({ 
-                error: 'Todos los campos (nombre, descripcion, cantidad, updated_at) son requeridos'
-            });
-        }
-
-        let updateQuery = 'UPDATE productos SET nombre = ?, descripcion = ?, cantidad = ?, imagen = ?, updated_at = ? WHERE id = ? AND updated_at = ?';
-        let updateParams = [
-            nombre, 
-            descripcion, 
-            cantidad, 
-            imagen,
-            new Date().toISOString().slice(0, 19).replace('T', ' '),
-            productId,
-            updated_at
-        ];
-
-        if (req.tipo_acceso === 'compartida') {
-            updateQuery += ' AND empresa_id = ?';
-            updateParams.push(empresa_id);
-        }
-
-        const [result] = await db.query(updateQuery, updateParams);
-
-        if (result.affectedRows === 0) {
-            return res.status(409).json({ error: 'El producto fue modificado por otro usuario o no existe' });
-        }
-
-        // Log the update
-        const ipAddress = req.ip;
-        await db.query(
-            'INSERT INTO logs_modificaciones (usuario, producto_id, accion, fecha_hora, ip) VALUES (?, ?, ?, ?, ?)',
-            [username, productId, 'update', updateParams[4], ipAddress]
-        );
-
-
-        if(req.tipo_acceso === 'compartida') {
-            await db.query(
-                'INSERT INTO logs_modificaciones (usuario, empresa_id, producto_id, accion, fecha_hora, ip) VALUES (?, ?, ?, ?, ?, ?)',
-                [username, empresa_id, productId, 'update', updateParams[4], ipAddress]
-            );
-        }
-
-        return res.json({ 
-            id: productId, 
-            nombre, 
-            descripcion, 
-            cantidad, 
-            imagen,
-            updated_at: updateParams[4]
-        });
-    } catch (err) {
-
-      if (err.code === 'ER_CHECK_CONSTRAINT_VIOLATED') {
-        return res.status(400).json({
-          error: 'No se puede realizar la operación: el stock no puede ser negativo.',
-          code: err.code
-        });
-      }
-        console.error('Error al actualizar el producto:', err);
-        return res.status(500).json({ 
-            error: 'Error al actualizar el producto',
-            details: err.message 
-        });
-
-
-        
+    if (!nombre || !descripcion || cantidad === undefined || version === undefined) {
+      return res.status(400).json({ 
+        error: 'Todos los campos (nombre, descripcion, cantidad, version) son requeridos'
+      });
     }
+
+    const nuevaFecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+    // Construir la consulta
+    let updateQuery = `
+      UPDATE productos 
+      SET nombre = ?, descripcion = ?, cantidad = ?, imagen = ?, updated_at = ?, version = version + 1 
+      WHERE id = ? AND version = ?
+    `;
+    let updateParams = [
+      nombre, 
+      descripcion, 
+      cantidad, 
+      imagen,
+      nuevaFecha,
+      productId,
+      version
+    ];
+
+    if (req.tipo_acceso === 'compartida') {
+      updateQuery += ' AND empresa_id = ?';
+      updateParams.push(empresa_id);
+    }
+
+    const [result] = await db.query(updateQuery, updateParams);
+
+    if (result.affectedRows === 0) {
+      return res.status(409).json({ 
+        error: 'El producto fue modificado por otro usuario o no existe' 
+      });
+    }
+
+    // Log de modificaciones
+    const ipAddress = req.ip;
+
+    await db.query(
+      'INSERT INTO logs_modificaciones (usuario, producto_id, accion, fecha_hora, ip) VALUES (?, ?, ?, ?, ?)',
+      [username, productId, 'update', nuevaFecha, ipAddress]
+    );
+
+    if (req.tipo_acceso === 'compartida') {
+      await db.query(
+        'INSERT INTO logs_modificaciones (usuario, empresa_id, producto_id, accion, fecha_hora, ip) VALUES (?, ?, ?, ?, ?, ?)',
+        [username, empresa_id, productId, 'update', nuevaFecha, ipAddress]
+      );
+    }
+
+console.log('Producto actualizado correctamente y log registrado', updateParams);
+
+    // Devuelve el nuevo version y updated_at
+    return res.json({
+      id: productId,
+      nombre,
+      descripcion,
+      cantidad,
+      imagen,
+      updated_at: nuevaFecha,
+      version: version + 1
+    });
+
+  } catch (err) {
+    if (err.code === 'ER_CHECK_CONSTRAINT_VIOLATED') {
+      return res.status(400).json({
+        error: 'No se puede realizar la operación: el stock no puede ser negativo.',
+        code: err.code
+      });
+    }
+
+    console.error('Error al actualizar el producto:', err);
+    return res.status(500).json({ 
+      error: 'Error al actualizar el producto',
+      details: err.message 
+    });
+  }
 });
 
 

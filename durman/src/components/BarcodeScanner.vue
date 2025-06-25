@@ -126,6 +126,22 @@
             </div>
           </div>
         </div>
+        <div class=" w-full h-8 mb-14 "
+          
+          style="background-color: var(--bg); color: var(--text);"
+          >
+                  <a
+          style="background-color: var(--bg); color: var(--text);"
+        
+          class="cursor-pointer bg-gray-600 hover:bg-gray-700  top-6 ml-10 relative text-white font-semibold py-2 px-4 rounded-2xl shadow-md transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+          @click="$router.go(-1)"
+        >
+          ← Back
+        </a>
+        
+        
+        
+                </div>
   
         <!-- Scanner View -->
         <div class="relative w-full max-w-md mx-auto aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
@@ -331,7 +347,7 @@
                 <span class="text-blue-500 text-xl">🏭</span>
                 <div>
                   <p class="text-sm text-gray-500">Manufacturer</p>
-                  <p class="font-medium ">hola</p>
+                  <p class="font-medium ">Pipo Network</p>
                 </div>
               </div>
             </div>
@@ -344,7 +360,7 @@
               class="w-full bg-blue-500 text-white py-3 px-4 rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors"
             >
               <span class="text-xl">🛒</span>
-              <span>Add to Cart</span>
+              <span>Cerrar</span>
             </button>
           </div>
         </div>

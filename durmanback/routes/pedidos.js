@@ -11,11 +11,10 @@ const { getEmpresaDb } = require('../connecThis');
 const { rolesAdmin, rolesPro, rolesAll } = require('../helpers/roles');
 
 router.use(verifyToken); // siempre primero verificar el token
-router.use(verificarRol(rolesPro)); // aplicar verificación de rol global
 router.use(verificarLicencia); // verificar licencia antes de cualquier operación
 
 // Listar pedidos automáticos
-router.get('/', verifyToken, attachDbHybrid, async (req, res) => {
+router.get('/', verifyToken, attachDbHybrid, verificarRol(rolesAdmin), async (req, res) => {
   try {
     const empresa_id = req.user.empresa_id;
     const db = req.db || await getEmpresaDb(empresa_id);

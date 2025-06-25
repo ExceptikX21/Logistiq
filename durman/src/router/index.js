@@ -163,7 +163,7 @@ export const routes = [
     name:'loginview',
 
     component:( )=> import('../views/LoginView.vue'),
-    meta: { hideHeader: true, hidefooter: true, hideTour: true, ForceReload: true },
+    meta: { hideHeader: true, hidefooter: true, hideTour: true, ForceReload: true, hidePet: true  },
 
     
   } ,
@@ -177,6 +177,18 @@ export const routes = [
 
     
   } ,
+  
+  {
+    path:'/pricingview',
+
+    name:'pricingview',
+
+    component:( )=> import('../views/PayView.vue'),
+    meta: { hideHeader: true, hidefooter: true, hidePet: true },
+
+    
+  } 
+  ,
 
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('../views/404View.vue'),
     meta: { hideHeader: true, hidefooter: true },
@@ -198,7 +210,7 @@ export const routes = [
     name:'registerview',
 
     component:( )=> import('../views/RegisterView.vue'),
-    meta: { hideHeader: true, hidefooter: true, hideTour: true, ForceReload: true },
+    meta: { hideHeader: true, hidefooter: true, hideTour: true, ForceReload: true, hidePet: true,  },
   }
   
 

@@ -47,12 +47,26 @@
     <div class="sub-header" id="sub-header" v-if="!$route.meta.hideHeader">
 
 
-      <p class="text-white">{{ pageTitle }}</p>
-   
-   
-   
-    </div>
+<p class="text-white">{{ pageTitle }}</p>
+
+
+
+</div>    <div v-show="rol==='usuario_demo'  " class=" text-right bg-gray-200 " style="  color: var(--text);" id="sub-header" v-if="!$route.meta.hideHeader">
+
+
+  <p class="text-gray-600 allign-left text-sm textdemo">
+  Estás utilizando una cuenta de demostración con acceso limitado.
+  <br>
+  Para obtener acceso completo a todas las funcionalidades,solicita una cuenta personalizada  <button class="  bg-blue-500 text-white px-1 py-1 rounded-md text-sm hover:bg-green-600" @click="toggleModalAqui">Aquí</button>
+</p>
+
+
+
+
+</div>
   </div>
+  
+
 
 
 
@@ -274,6 +288,7 @@ export default {
       isHidden: false,
       isHeaderVisible: false,
       isTourVisible: true,
+      rol: localStorage.getItem("rol"),
       logo: "", // Logo de la configuración
       primaryColor: "", // Color primario de la configuración
       secondColor: "", // Color secundario de la configuración
@@ -331,6 +346,13 @@ if (configRaw) {
 
 
   methods: {
+
+    toggleModalAqui() {
+      this.$router.push("/pricingview#pricing");
+
+      
+      
+    },
 
     aplicarEstilosCliente() {
     const root = document.documentElement;
@@ -396,6 +418,16 @@ if (configRaw) {
   padding: 0;
   box-sizing: border-box;
 
+}
+
+.textdemo {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.5rem;
+
+  
 }
 
 #app {
@@ -514,7 +546,7 @@ nav a.router-link-exact-active {
 
   --color-principal: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 
-  --bg: #ffffff;         /* Claro */
+  --bg: #F8F8FF;         /* Claro */
   --text: #1e2939;
   --text-secundario: #1a202b; /* Secundario */
 

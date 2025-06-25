@@ -932,6 +932,7 @@ export default {
   cantidad: product.cantidad,
   imagen: product.imagen,
   updated_at: this.formatFechaParaMySQL(product.updated_at),
+  version: product.version
 };
 
 
@@ -942,7 +943,7 @@ export default {
         product.editing = false;
 
         // Actualiza el producto en la lista con la respuesta de la API (opcional)
-
+        product.version = updatedProduct.version;
           product.updated_at = updatedProduct.updated_at;
 
         console.log("Cambios guardados:", updatedProduct);
@@ -985,8 +986,16 @@ export default {
   footer: "Ha ocurrido in error inesperado", // Usamos 'footer' para el subtítulo
   text: "Se ha modificado el producto por otro usuario, por favor recargue la página",
   icon: "error",
-  confirmButtonText: "Aceptar"
-});
+  confirmButtonText: "Aceptar",
+  showCancelButton: true, 
+  
+  cancelButtonColor: 'var(--color-secundario)',
+  cancelButtonText: "Cerrar",
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.reload();
+  }
+})
 
         }
         else {
@@ -1165,11 +1174,6 @@ this.$router.push('/profileconfig#seccion-membership');
         return;
       }
 
-      const api = api.create({
-        baseURL: "https://192.168.0.14:443", // URL de tu backend
-        withCredentials: true, // Habilita el envío de cookies o credenciales
-      }
-      );
       const token = localStorage.getItem("token");
 
       try {

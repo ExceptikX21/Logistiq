@@ -56,9 +56,9 @@ router.get('/api/orders/search', verifyToken, attachDbHybrid, verificarRol(roles
   
       // Campos de búsqueda: ajusta según tus columnas
       let whereClause = `
-        WHERE (orderNumber LIKE ? OR status LIKE ? OR supplier LIKE ?)`;
+        WHERE (orderNumber LIKE ? OR status LIKE ? OR supplier LIKE ? OR details LIKE ? OR date LIKE ? OR total LIKE ?) `;
   
-      const params = [searchTerm, searchTerm, searchTerm];
+      const params = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm];
   
       // Filtro por empresa en modo compartido
       if (tipo_acceso === 'compartida') {

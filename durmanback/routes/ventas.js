@@ -5,7 +5,7 @@ const router = express.Router();
 const db = require('../model/venta');
 const crypto = require('crypto'); // <- Necesario para el hash
 const jwt = require("jsonwebtoken");
-const { rolesAdmin, rolesPro } = require('../helpers/roles');
+const { rolesAdmin, rolesPro, rolesAll } = require('../helpers/roles');
 
 const { getEmpresaDb } = require('../connecThis');
 const verificarRol = require('../middlewares/verificationRol');
@@ -88,7 +88,7 @@ function verificarFirma(venta) {
 
 
 // Listar ventas
-router.get('/', verifyToken, attachDbHybrid, async (req, res) => {
+router.get('/', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const offset = (page - 1) * limit;
@@ -437,29 +437,52 @@ router.get('/debug-firma/:id', verifyToken, attachDbHybrid,  verificarRol(rolesP
 });
 
 //buscar venta por id
-router.get('/:id', verifyToken, attachDbHybrid, verificarRol(['admin']),  async (req, res) => {
-  const empresa_id = req.user.empresa_id;
-  const db = req.db || await getEmpresaDb(empresa_id);
-  const ventaId = req.params.id;
+router.get('/search', verifyToken, attachDbHybrid, verificarRol(rolesPro), async (req, res) => {
+  const { query, page = 1, limit = 10 } = req.query;
+  if (!query) return res.status(400).json({ error: 'El parámetro "query" es obligatorio' });
 
-  let query = 'SELECT * FROM ventas WHERE id = ?';
-  const params = [ventaId];
-
-  if (req.tipo_acceso === 'compartida') {
-    query += ' AND empresa_id = ?';
-    params.push(req.empresa_id);
-  }
+  const offset = (page - 1) * limit;
+  const db = req.db;
+  const empresa_id = req.empresa_id;
+  const tipo_acceso = req.tipo_acceso;
 
   try {
-    const [rows] = await db.query(query, params);
+    const searchTerm = `%${query}%`;
 
-    if (rows.length === 0) {
-      return res.status(404).json({ error: 'Venta no encontrada' });
+    // Campos que deseas permitir buscar (ajustables)
+    let whereClause = `
+      WHERE (cliente LIKE ? OR productos LIKE ? OR metodo_pago LIKE ? OR fecha LIKE ? OR precio_total LIKE ? OR cantidad LIKE ? OR id LIKE ?)
+    `;
+    let params = [searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm, searchTerm];
+
+    if (tipo_acceso === 'compartida') {
+      whereClause += ` AND empresa_id = ?`;
+      params.push(empresa_id);
     }
 
-    res.json(rows[0]);
+    const [countResult] = await db.query(
+      `SELECT COUNT(*) AS total FROM ventas ${whereClause}`,
+      params
+    );
+
+    const [results] = await db.query(
+      `SELECT * FROM ventas ${whereClause}
+       ORDER BY id DESC
+       LIMIT ? OFFSET ?`,
+      [...params, Number(limit), Number(offset)]
+    );
+
+    res.json({
+      ventas: results,
+      total: countResult[0].total,
+      page: Number(page),
+      limit: Number(limit),
+      totalPages: Math.ceil(countResult[0].total / limit)
+    });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error al buscar ventas:', err);
+    res.status(500).json({ error: 'Error interno al buscar ventas' });
   }
 });
+
 module.exports = router;

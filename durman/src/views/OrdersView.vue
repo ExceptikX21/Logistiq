@@ -1,5 +1,7 @@
 <template>
     <div class="bg-gray-100 dark-mode">
+      
+      
       <div class=" w-full bg-white dark:bg-gray-800 shadow-md p-4 flex justify-between items-center">
         <div class="flex space-x-4">
           <router-link to="/proveedorview"><i class="fas fa-shipping-fast  opacity-75 hover:text-blue-500 transition duration-300"></i></router-link>
@@ -15,9 +17,25 @@
           
           
         </div>
+        
       </div>
+
+
+      <div class=" w-full h-8 mt-8 ml-4 ">
+          <a
+  class="cursor-pointer  hover:bg-gray-700  text-white font-semibold py-2 px-4 rounded-2xl shadow-md transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+  @click="$router.go(-1)"
+    style="background-color: var(--bg); color: var(--text);"
+>
+  ← Back
+</a>
+
+
+
+        </div>
   
       <main class="pt-10 p-4 grid grid-cols-1 md:grid-cols-5 gap-4">
+        
         <!-- Tabla de órdenes -->
         <div class="col-span-1 md:col-span-3 bg-white dark:bg-gray-800 shadow-md rounded-lg p-4 overflow-x-auto">
           <table class="min-w-full" >
@@ -550,9 +568,11 @@ async searchOrder(query) {
 
     if (data && Array.isArray(data.orders)) {
       this.ordens = data.orders.map((item) => ({
-        ...item,
-        editing: false,
-      }));
+  ...item,
+  editing: false,
+  date: isNaN(new Date(item.date)) ? null : new Date(item.date).toISOString().split('T')[0], // Formatea la fecha
+}));
+
       this.totalPages = data.totalPages;
     } else {
       console.error('Error: "orders" no es un array válido');

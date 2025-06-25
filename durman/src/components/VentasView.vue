@@ -16,23 +16,44 @@
 
         </div>
     <h1 class="text-2xl font-bold mb-4">Gestión de Ventas</h1>
+    
+    <div class="flex justify-end mb-4">
+
+      <div class="flex gap-2">
+    <input
+      v-model="query"
+      type="text"
+      class="border border-gray-300 min-w-[500px] rounded-md p-2"
+      placeholder="Ingresa el ID de la venta o el nombre del cliente"
+    />
+    <!-- <button
+      @click="searchVentas(searchQuery)"
+      class="bg-blue-500 text-white px-4 py-2 rounded"
+    >
+      Buscar venta
+    </button> -->
+  </div>
+    </div>
 
     <div class="flex justify-end mb-4  ">
 
-    <div v-if="ventas.length < 5" class="flex gap-2 start  text-white px-4 py-2 mr-2 rounded w-full">
-      <img src="https://img.freepik.com/free-vector/realistic-stainless-steel-pipeline-background-pvc-plumbing_1017-51570.jpg" alt="" style="width: 30px;
-height: 30px;">
+      <div 
+  v-if="ventas.length < 5 && !loading" 
+  class="flex items-center gap-4 bg-red-100 border border-red-300 p-4 rounded-2xl w-full shadow-md"
+>
+  <img 
+    src="https://img.freepik.com/free-vector/realistic-stainless-steel-pipeline-background-pvc-plumbing_1017-51570.jpg" 
+    alt="Alerta de pocas ventas"
+    class="w-12 h-12 object-cover rounded-full border border-white shadow-sm"
+  />
 
-      <div class="bg-red-400 text-xs w-full text-white px-4 py-2 mr-16 rounded">
-        
-        <span>¡Atención!</span>
-        <br>
-        <span>Solo has realizado un Total de {{ ventas.length }} ventas</span>
-        <p>Para desbloquear todas las funciones, realiza al menos 5 ventas.</p>
-      </div>
+  <div class="flex-1 text-sm text-red-800">
+    <p class="font-semibold text-base">⚠️ ¡Atención!</p>
+    <p class="text-sm">Solo has registrado un total de <span class="font-bold">{{ ventas.length }}</span> ventas.</p>
+    <p class="text-xs text-red-600 mt-1">Te recomendamos hacer pruebas de venta o verificar si el sistema está en uso.</p>
+  </div>
+</div>
 
-
-    </div>
     <div v-else  class="flex gap-2 start  text-white px-4 py-2 mr-2 rounded w-full">
       <img src="https://img.freepik.com/free-vector/realistic-stainless-steel-pipeline-background-pvc-plumbing_1017-51570.jpg" alt="" style="width: 30px;
 height: 30px;">
@@ -48,24 +69,10 @@ height: 30px;">
 
     </div>
 
-      <div class="flex gap-2">
-    <input
-      v-model="searchQuery"
-      type="text"
-      class="border border-gray-300 rounded-md p-2"
-      placeholder="Ingresar ID de la venta"
-    />
-    <!-- <button
-      @click="searchVentas(searchQuery)"
-      class="bg-blue-500 text-white px-4 py-2 rounded"
-    >
-      Buscar venta
-    </button> -->
-  </div>
     
   <button
   :class="[
-    'fixed bottom-20 right-3 px-4 py-2 rounded-xl text-white text-sm font-semibold shadow-lg transition duration-500 ease-in-out transform hover:scale-105',
+    'fixed bottom-20 right-3 px-4 py-2 rounded-xl text-white text-sm font-semibold text-xs shadow-lg transition duration-500 ease-in-out transform hover:scale-105',
     mostrarFormulario
       ? 'bg-red-500 hover:bg-red-700'
       : 'bg-blue-500 hover:bg-blue-700',
@@ -73,7 +80,7 @@ height: 30px;">
   @click="mostrarFormulario = !mostrarFormulario"
 >
   <span v-if="mostrarFormulario">🗶 Cerrar</span>
-  <span v-else>＋ Nueva</span>
+  <span v-else>＋  Crear nueva venta</span>
 </button>
 
 </div>
@@ -177,11 +184,11 @@ import api from '@/services/api';
 import Swal from 'sweetalert2'
 
 import { useRouter } from 'vue-router';
-
+const query = ref('');
 const router = useRouter();
 
 const currentPage = ref(1)
-const itemsPerPage = ref(10)
+const itemsPerPage = ref(5)
 const totalItems = ref(0)
 const totalPages = ref(0)
 const alertMessage = ref('')
@@ -222,6 +229,9 @@ const token = localStorage.getItem('token');
     
 
     const cargarVentas = async () => {
+
+
+      
     try {
       const response = await api.get(`${API_URL}?page=${currentPage.value}&limit=${itemsPerPage.value}`, {
         headers: {
@@ -232,6 +242,12 @@ const token = localStorage.getItem('token');
       ventas.value = response.data.ventas;
       totalItems.value = response.data.pagination.totalProducts;
       totalPages.value = Math.ceil(totalItems.value / itemsPerPage.value);
+      if (currentPage.value > totalPages.value) {
+  currentPage.value = 1;
+  await cargarVentas(); // vuelve a cargar desde la primera página
+  return; // evita continuar con valores incorrectos
+}
+
       alertMessage.value = response.data.alert;
 
       precioTotal.value = ventas.value.reduce((total, venta) => {
@@ -291,7 +307,6 @@ const token = localStorage.getItem('token');
   };
 
     const guardarVenta = async () => {
-      await cargarVentas()
 
 
 try {
@@ -334,6 +349,8 @@ Swal.fire({
   confirmButtonText: "Aceptar",
   confirmButtonColor: "var(--color-secundario)",
 })
+
+await cargarVentas()
 
 
   
@@ -461,29 +478,37 @@ const nextPage = async () => {
 };
 
     const searchQuery = ref('');
-    const searchVentas = async (ventaId) => {
-    loading.value = true;
+    const searchVentas = async (query) => {
+  loading.value = true;
 
-    if (!ventaId) {
-      await cargarVentas();
-      return;
-    }
+  if (!query) {
+    await cargarVentas();
+    return;
+  }
 
-    try {
-      const response = await api.get(`https://192.168.0.14:443/api/ventas/${ventaId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      ventas.value = [response.data];
-    } catch (error) {
-      console.error("Error al obtener la venta:", error.response?.data || error.message);
-      ventas.value = [];
-    } finally {
-      loading.value = false;
-    }
+  try {
+    const response = await api.get(`/api/ventas/search?query=${encodeURIComponent(query)}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    // Asegúrate de que response.data sea un array y formatea las fechas
+ventas.value = response.data.ventas.map(venta => {
+  return {
+    ...venta,
+    fecha: formatFechaParaMySQL(venta.fecha)
   };
-  watch(searchQuery, (nuevoValor) => {
+})
+
+  } catch (error) {
+    console.error("Error al obtener la venta:", error.response?.data || error.message);
+    ventas.value = [];
+  } finally {
+    loading.value = false;
+  }
+};
+  watch(query, (nuevoValor) => {
   searchVentas(nuevoValor);
 });
 
@@ -509,6 +534,7 @@ const nextPage = async () => {
   precioTotal,
   formatoMoneda,
   searchQuery,
+  query,
     searchVentas,
     loading,
     }
