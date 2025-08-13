@@ -177,6 +177,17 @@ export const routes = [
 
     
   } ,
+
+  {
+    path:'/contactosales',
+
+    name:'contactosales',
+
+    component:( )=> import('../views/ContactView.vue'),
+    meta: { hideHeader: true, hidefooter: true, hidePet: true },
+
+    
+  } ,
   
   {
     path:'/pricingview',

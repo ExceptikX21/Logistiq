@@ -199,11 +199,9 @@ this.$router.push('/profileconfig#seccion-membership');
   
       // Rechazar un pedido
       async rechazarPedido(id) {
+
         try {
-          const api = api.create({
-            baseURL: "https://192.168.0.14:443", // Ajusta la URL del backend
-            withCredentials: true,
-          });
+
   
           const token = localStorage.getItem("token"); // Obtener el token de localStorage
           await api.put(`/api/pedidos-automaticos/${id}/rechazar`, null, {

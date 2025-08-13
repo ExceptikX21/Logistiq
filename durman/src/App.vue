@@ -13,7 +13,7 @@
 
 
       <div class="butttonTogglss">
-        <svg @click="toggleButton" class="mi-icono" id="ButtonT" xmlns="http://www.w3.org/2000/svg"
+        <svg @click="toggleButton" class="mi-icono header-svg" id="ButtonT" xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512">
 
           <path
@@ -82,15 +82,23 @@
 
         </router-link>
       </li>
+      
 
       <li>
 
-        <router-link to="/productform">
+<router-link to="/productform">
 
-          Agregar a Inventario
+  Agregar a Inventario
 
-        </router-link>
-      </li>
+</router-link>
+</li>      <li>
+
+<router-link to="/contactosales">
+
+  Contacto
+
+</router-link>
+</li>
       <li>
 
         <router-link to="/updateproducts">
@@ -535,11 +543,11 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #053c7b;
 }
 
 :root {
@@ -657,7 +665,6 @@ nav a.router-link-exact-active {
 
 
 
-  color: rgb(255, 255, 255);
 
 
   text-align: center;
@@ -666,14 +673,13 @@ nav a.router-link-exact-active {
   display: flex;
   left: 10%;
   white-space: nowrap;
-  font-size: 1.5rem;
 
 
 
 
 }
 
-.header svg {
+.header-svg {
   filter: brightness(0) invert(1);
   height: 27px;
   width: 24px;

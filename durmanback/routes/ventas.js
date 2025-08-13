@@ -114,7 +114,7 @@ router.get('/', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req,
     const [sumResult] = await db.query(sumQuery, req.tipo_acceso === 'dedicada' ? [] : [req.empresa_id]);
     const [results] = await db.query(query, params);
 
-    const totalProducts = countResult[0].total;
+    const totalVentas = countResult[0].total;
     const totalUnidades = sumResult[0].totalUnidades || 0;
 
     // Integrity verification
@@ -137,9 +137,9 @@ router.get('/', verifyToken, attachDbHybrid, verificarRol(rolesAll), async (req,
       pagination: {
         page: Number(page),
         limit: Number(limit),
-        totalProducts,
+        totalVentas,
         totalUnidades,
-        totalPages: Math.ceil(totalProducts / limit)
+        totalPages: Math.ceil(totalVentas / limit)
       },
       alert: 'aiAlertMessage',
     });

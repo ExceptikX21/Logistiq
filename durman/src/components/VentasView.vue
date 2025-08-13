@@ -1,99 +1,88 @@
 <template>
-  <div class="p-4"
-  
-  style="background-color: var(--bg) ; color: var(--text);"
-  >
-
-    <div class=" w-full align-center flex justify-end h-8 ">
-          <a
-  class="cursor-pointer bg-gray-600 hover:bg-gray-700  text-white font-semibold mr-10 py-1 px-4 rounded-2xl shadow-md transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
-  @click="$router.go(-1)"
->
-  ← Back
-</a>
-
-
-
-        </div>
-    <h1 class="text-2xl font-bold mb-4">Gestión de Ventas</h1>
-    
-    <div class="flex justify-end mb-4">
-
-      <div class="flex gap-2">
-    <input
-      v-model="query"
-      type="text"
-      class="border border-gray-300 min-w-[500px] rounded-md p-2"
-      placeholder="Ingresa el ID de la venta o el nombre del cliente"
-    />
-    <!-- <button
-      @click="searchVentas(searchQuery)"
-      class="bg-blue-500 text-white px-4 py-2 rounded"
-    >
-      Buscar venta
-    </button> -->
-  </div>
+  <div class="p-4" style="background-color: var(--bg); color: var(--text);">
+    <!-- Botón de regreso -->
+    <div class="w-full flex justify-end h-8">
+      <a
+        class="cursor-pointer bg-gray-600 hover:bg-gray-700 text-white font-semibold mr-10 py-1 px-4 rounded-2xl shadow-md transition duration-300 ease-in-out transform hover:-translate-y-0.5 hover:scale-105"
+        @click="$router.go(-1)"
+      >
+        ← Volver
+      </a>
     </div>
 
-    <div class="flex justify-end mb-4  ">
+    <h1 class="text-2xl font-bold mb-4">Gestión de Ventas</h1>
 
-      <div 
-  v-if="ventas.length < 5 && !loading" 
-  class="flex items-center gap-4 bg-red-100 border border-red-300 p-4 rounded-2xl w-full shadow-md"
->
-  <img 
-    src="https://img.freepik.com/free-vector/realistic-stainless-steel-pipeline-background-pvc-plumbing_1017-51570.jpg" 
-    alt="Alerta de pocas ventas"
-    class="w-12 h-12 object-cover rounded-full border border-white shadow-sm"
-  />
+    <!-- Input de búsqueda -->
+    <div class="flex justify-end mb-4">
+      <div class="flex gap-4">
+        <input
+          v-model="query"
+          type="text"
+          class="border border-gray-300 min-w-[500px] rounded-md p-2"
+          placeholder="Ingresa el ID de la venta o el nombre del cliente"
+        />
+      </div>
+      <button
+      class="ml-6"
+      :class="[
+        ' bottom-20 right-3 px-4 py-2 rounded-xl text-white text-sm font-semibold shadow-lg transition duration-500 ease-in-out transform hover:scale-105',
+        mostrarFormulario ? 'bg-red-500 hover:bg-red-700' : 'bg-blue-500 hover:bg-blue-700',
+      ]"
+      @click="mostrarFormulario = !mostrarFormulario"
+    >
+      <span v-if="mostrarFormulario">🗶 Cerrar</span>
+      <span v-else>＋ Crear nueva venta</span>
+    </button>
+    </div>
 
-  <div class="flex-1 text-sm text-red-800">
-    <p class="font-semibold text-base">⚠️ ¡Atención!</p>
-    <p class="text-sm">Solo has registrado un total de <span class="font-bold">{{ ventas.length }}</span> ventas.</p>
-    <p class="text-xs text-red-600 mt-1">Te recomendamos hacer pruebas de venta o verificar si el sistema está en uso.</p>
-  </div>
-</div>
-
-    <div v-else  class="flex gap-2 start  text-white px-4 py-2 mr-2 rounded w-full">
-      <img src="https://img.freepik.com/free-vector/realistic-stainless-steel-pipeline-background-pvc-plumbing_1017-51570.jpg" alt="" style="width: 30px;
-height: 30px;">
-
-      <div  class="bg-green-400 text-xs w-full text-white px-4 py-2 mr-16 rounded">
-        
-        <span>¡Felicidades!</span>
-        <br>
-        <span>Has realizado un Total de 15 ventas con un precio total de $ {{ precioTotal }}  </span>
-        <p></p>
+    <!-- Alerta ventas -->
+    <div class="flex justify-end mb-4">
+      <div
+        v-if="totalItems < 2"
+        class="flex items-center gap-4 bg-yellow-50 border border-yellow-300 p-4 rounded-xl w-full shadow-sm"
+      >
+        <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z" />
+        </svg>
+        <div class="flex-1 text-sm text-yellow-900">
+          <p class="font-semibold text-base">⚠️ ¡Atención!</p>
+          
+          <p>Solo has registrado <span class="font-bold">{{ totalItems }}</span> ventas.</p>
+          <p class="text-xs mt-1">Te recomendamos hacer pruebas o verificar si el sistema está en uso.</p>
+        </div>
       </div>
 
+      <div v-else class="flex gap-4 items-center bg-green-100 border border-green-300 p-4 rounded-xl w-full shadow-sm">
+        <!-- <img
+          src="https://img.freepik.com/free-vector/realistic-stainless-steel-pipeline-background-pvc-plumbing_1017-51570.jpg"
+          alt="Felicidades"
+          class="w-10 h-10 object-cover rounded-full border border-white shadow-sm"
+        />
+        <div class="text-green-800 text-sm">
+          <p><strong>¡Felicidades!</strong></p>
+          <p>Has realizado un total de {{ totalItems }} ventas</p>
+          <p>Precio total: ${{ precioTotal }}</p>
+        </div> -->
 
+
+        <ToastComponent message="Felicidades! Has realizado un total de {{ totalItems }} ventas. Precio total: ${{ precioTotal }}">
+
+
+        </ToastComponent>
+      </div>
     </div>
 
-    
-  <button
-  :class="[
-    'fixed bottom-20 right-3 px-4 py-2 rounded-xl text-white text-sm font-semibold text-xs shadow-lg transition duration-500 ease-in-out transform hover:scale-105',
-    mostrarFormulario
-      ? 'bg-red-500 hover:bg-red-700'
-      : 'bg-blue-500 hover:bg-blue-700',
-  ]"
-  @click="mostrarFormulario = !mostrarFormulario"
->
-  <span v-if="mostrarFormulario">🗶 Cerrar</span>
-  <span v-else>＋  Crear nueva venta</span>
-</button>
-
-</div>
+    <!-- Botón flotante -->
 
 
+    <!-- Formulario de nueva venta -->
     <form v-if="mostrarFormulario" @submit.prevent="guardarVenta" class="grid gap-2 mb-6">
-      <input v-model="venta.fecha" type="datetime-local" class="border p-2" required/>
+      <input v-model="venta.fecha" type="datetime-local" class="border p-2" required />
       <input v-model="venta.productos" placeholder="Productos" class="border p-2" required />
       <input v-model="venta.precio_total" type="number" step="0.01" placeholder="Precio total" class="border p-2" required />
       <input v-model="venta.cliente" placeholder="Cliente" class="border p-2" />
       <input v-model="venta.cantidad" type="number" placeholder="Cantidad" class="border p-2" required />
       <select v-model="venta.metodo_pago" class="border p-2">
-
         <option value="efectivo">Efectivo</option>
         <option value="tarjeta">Tarjeta</option>
         <option value="transferencia">Transferencia</option>
@@ -101,81 +90,55 @@ height: 30px;">
       <button class="bg-blue-500 text-white py-2 rounded">Guardar Venta</button>
     </form>
 
-    <div v-if="ventas.length === 0">No hay ventas registradas.</div>
-
-    <table v-else class="w-full border-collapse border">
-      <thead class="relative text-left">
-        <tr 
-        style="background-color: var(--bg); filter: brightness(0.8);
-        border: 2px solid var(--);
-        "
-        
-        class="  text-sm font-medium align-center">
-          <th class=" p-2" >ID</th>
-          <th class="border  p-2">Fecha</th>
-          <th class="border p-2">Productos</th>
-          <th class="border p-2">Precio</th>
-          <th class="border p-2">Cliente</th>
-          <th class="border p-2">Método</th>
-          <th class=" p-2 "> cantidad</th>
-          <th class=" p-2 place-items-center text-center flex">Acciones</th>
-
+    <!-- Tabla de ventas -->
+    <div v-if="ventas.length === 0" class="text-center py-4 text-gray-500">No hay ventas registradas.</div>
+    <table v-else class="w-full border-collapse text-sm shadow-sm rounded-xl overflow-hidden">
+      <thead style="background-color: var(--bg); filter: brightness(0.9);" class="text-left">
+        <tr class="text-sm font-medium">
+          <th class="p-2">ID</th>
+          <th class="p-2">Fecha</th>
+          <th class="p-2">Productos</th>
+          <th class="p-2">Precio</th>
+          <th class="p-2">Cliente</th>
+          <th class="p-2">Método</th>
+          <th class="p-2">Cantidad</th>
+          <th class="p-2 text-center">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="v in ventas" :key="v.id">
-          <td class="border p-2 text-center "
-          style="background-color: var(--bg); filter: brightness(0.8);"
-          >{{ v.id }}</td>
-          <td class="border p-2">{{ formatFecha(v.fecha) }}</td>
-          <td class="border p-2 "  >{{ v.productos }}</td>
-          <td class="border p-2">{{ v.precio_total }}</td>
-          <td class="border p-2">{{ v.cliente }}</td>
-          <td class="border p-2 uppercase text-center text-yellow-800">{{ v.metodo_pago }}</td>
-          <td class="border p-2">{{ v.cantidad }}</td>
-          <td class="border p-2 justify-center flex flex-ce" >
-            
-            <div class="w-14 flex-align-center flex flex-col text-xs"> <button @click="editarVenta(v)" class="text-white bg-blue-500 py-2 px-2 gap-2 mr-2 mt-2 rounded-md"><i class="fas fa-edit"></i></button>
-            <button @click="eliminarVenta(v.id)" class=" text-white bg-red-500 py-2 px-2 gap-2 mr-2  rounded-md mt-2"><i class="fa-solid fa-trash"></i></button>
-          </div>
-           
+        <tr v-for="v in ventas" :key="v.id" class="hover:bg-gray-100">
+          <td class="p-2 text-center" style="background-color: var(--bg); filter: brightness(0.9);">{{ v.id }}</td>
+          <td class="p-2">{{ formatFecha(v.fecha) }}</td>
+          <td class="p-2">{{ v.productos }}</td>
+          <td class="p-2">${{ v.precio_total }}</td>
+          <td class="p-2">{{ v.cliente }}</td>
+          <td class="p-2 uppercase text-yellow-800 text-center">{{ v.metodo_pago }}</td>
+          <td class="p-2 text-center">{{ v.cantidad }}</td>
+          <td class="p-2 flex text-xs justify-center gap-2">
+            <button @click="editarVenta(v)" class="text-white bg-blue-500 p-2 rounded-md hover:bg-blue-600"><i class="fas fa-edit"></i></button>
+            <button @click="eliminarVenta(v.id)" class="text-white bg-red-500 p-2 rounded-md hover:bg-red-600"><i class="fa-solid fa-trash"></i></button>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Paginación -->
+    <div class="pagination mt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+      <select v-model="itemsPerPage" @change="handlePageSizeChange" class="border px-3 py-1 rounded">
+        <option :value="5">5 por página</option>
+        <option :value="10">10 por página</option>
+        <option :value="20">20 por página</option>
+      </select>
+      <div class="flex items-center gap-2">
+        <button @click="prevPage" :disabled="currentPage <= 1" class="px-2 py-1 border rounded hover:bg-gray-100">&lt;</button>
+        <span class="px-2">Página {{ currentPage }} de {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="currentPage >= totalPages" class="px-2 py-1 border rounded hover:bg-gray-100">&gt;</button>
+      </div>
+      <div class="text-gray-600">Total de ventas: {{ totalItems }}</div>
+    </div>
   </div>
-  <div class="pagination">
-          <select
-            v-model="itemsPerPage"
-            @change="handlePageSizeChange"
-            class="page-select"
-          >
-            <option :value="5">5 por página</option>
-            <option :value="10">10 por página</option>
-            <option :value="20">20 por página</option>
-          </select>
-          <div class="pages">
-            <button
-              @click="prevPage"
-              :disabled="currentPage <= 1"
-              class="page-btn"
-            >
-              &lt;
-            </button>
-            <span class="page-info"
-              >Página {{ currentPage }} de {{ totalPages }}</span
-            >
-            <button
-              @click="nextPage"
-              :disabled="currentPage >= totalPages"
-              class="page-btn"
-            >
-              &gt;
-            </button>
-          </div>
-          <div class="total-info">Total de ventas: {{ totalItems }}</div>
-        </div>
 </template>
+
 
 <script>
 import { ref, onMounted,  watch  } from 'vue'
@@ -184,6 +147,7 @@ import api from '@/services/api';
 import Swal from 'sweetalert2'
 
 import { useRouter } from 'vue-router';
+import ToastComponent from './ToastComponent.vue';
 const query = ref('');
 const router = useRouter();
 
@@ -205,6 +169,10 @@ const formatoMoneda = precioTotal.value.toLocaleString('en-US', {
 
 export default {
   name: 'VentasView',
+
+  components: {
+    ToastComponent
+  },
 
 
 
@@ -240,7 +208,7 @@ const token = localStorage.getItem('token');
       });
 
       ventas.value = response.data.ventas;
-      totalItems.value = response.data.pagination.totalProducts;
+      totalItems.value = response.data.pagination.totalVentas;
       totalPages.value = Math.ceil(totalItems.value / itemsPerPage.value);
       if (currentPage.value > totalPages.value) {
   currentPage.value = 1;

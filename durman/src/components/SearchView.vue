@@ -1,12 +1,28 @@
 <template>
     <div class="search-bar" ref="searchBar">
-      <input 
+
+
+<div class="flex ">      <Search  
+          
+          @click="toggleDropdown"
+          color="#718096"
+          :size="25"
+          style="margin: 5px; cursor: pointer;"/>
+
+
+
+          <input
+      
+      v-if="ShowSearch"
+
         type="text" 
         v-model="searchQuery" 
         @input="onInput" 
         placeholder="Buscar..." 
         class="search-input"
-      />
+      /></div>
+
+
       <div v-if="showDropdown" class="dropdown"  ref="dropdown">
         <ul>
           <li v-for="route in filteredRoutes" :key="route.path">
@@ -20,21 +36,38 @@
   <script>
   import { routes } from '@/router/index.js'; // Asegúrate de que las rutas estén exportadas
   
+  import { Search } from 'lucide-vue-next';// Importa el componente de configuración
   export default {
     data() {
       return {
         searchQuery: '',
         showDropdown: false,
         filteredRoutes: [],
+        ShowSearch: false, // Controla la visibilidad de la barra de búsqueda
       };
     },
+    components: {
+      Search, // Registra el componente de configuración
+    }
+    
+    
+    ,
     methods: {
       onInput() {
         this.filteredRoutes = routes.filter(route => 
           route.name.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
         this.showDropdown = this.filteredRoutes.length > 0; // Muestra el dropdown si hay resultados
-      },    handleClickOutside(event) {
+      },
+      
+      
+      toggleDropdown() {
+        this.ShowSearch = !this.ShowSearch;
+      },
+      
+
+      
+      handleClickOutside(event) {
 
 const searchBar = this.$refs.searchBar;
 
@@ -73,7 +106,7 @@ if (searchBar && !searchBar.contains(event.target) && dropdown && !dropdown.cont
   .search-input {
     padding: 5px;
     margin-bottom: 10px;
-    width: 100%;
+    width: 100px;
     box-sizing: border-box; /* Asegúrate de que el padding no afecte el ancho total */
     border: 1px solid #ccc;
     background-color: var(--bg); /* Fondo de la barra de búsqueda */

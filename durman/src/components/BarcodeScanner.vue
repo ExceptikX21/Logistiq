@@ -581,6 +581,14 @@
       videoStream = videoElement.srcObject
     } catch (err) {
       console.error('Error al iniciar escáner:', err)
+
+      Swal.fire({
+  title: "Corex AI - V40",
+  text: "No fue posible acceder a la cámara. Asegúrate de que tu dispositivo sea compatible y que los permisos estén habilitados.",
+  footer: "Revisa la configuración del dispositivo o los permisos de la cámara.",
+  icon: "error",
+  confirmButtonText: "Aceptar"
+});
       isShowing.value = false
     }
   })

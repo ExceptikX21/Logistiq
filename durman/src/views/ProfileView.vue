@@ -10,38 +10,44 @@
 
     <div v-else style="background-color: var(--bg); color: var(--text);">
   <div class="flex" v-if="user">
+    
     <!-- Sidebar -->
-    <div class="sidebar">
-      <svg @click="toggleButton" class="mi-icono" id="ButtonT" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+    <div class="sidebar" v-show="showSidebar" :class="{ 'sidebar-navegation': estaActiva }">
+      <svg @click="toggleButton" class="mi-icono opacity-0" id="ButtonT" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <path d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z" />
       </svg>
-      <div class="sidebar-header" v-show="rol === 'admin_pro'" >
-      MY ADMIN
+      <div class="sidebar-header  " v-if="rol === 'admin_pro'" v-show="rol === 'admin_pro'" >
+     
+      <div class="absolute h-16 mb-8">
+        <img class=" rounded-full relative top-0  mb-8 " :src="logo" width="90" height="90" alt="" :class="{ 'left-0': estaActiva }" >
+
+      </div>
+      
       </div>
       <div class="sidebar-header" v-if="rol === 'usuario'" v-show="rol === 'usuario'" >
       MY ACCOUNT
       </div>
-      <nav class="sidebar-nav" id="sidebar-nav" v-show="rol === 'admin_pro'" >
+      <nav class="sidebar-nav mt-8" id="sidebar-nav" v-show="rol === 'admin_pro'" >
 
 <!-- 1. Estructura básica -->
-<router-link to="/almacenes" class="sidebar-link">Almacenes</router-link>
-<router-link to="/proveedorview" class="sidebar-link">Proveedores</router-link>
+<router-link to="/almacenes" class="sidebar-link"><div class="flex "><i class="pr-4"> <Warehouse width="15px" height="15px"  /> </i>Almacenes</div></router-link>
+<router-link to="/proveedorview" class="sidebar-link"><div class="flex "><i class=" pr-4"> <HandPlatter width="15px" height="15px"></HandPlatter> </i>Proveedores</div></router-link>
 
 <!-- 2. Gestión de productos -->
-<router-link to="/productform" class="sidebar-link">Agregar productos</router-link>
-<router-link to="/updateproducts" class="sidebar-link">Productos</router-link>
-<router-link to="/stock" class="sidebar-link">Stock</router-link>
+<router-link to="/productform" class="sidebar-link"><div class=" flex"><i class=" pr-4"> <PackagePlus width="15px" height="15px"></PackagePlus> </i>Agregar productos</div></router-link>
+<router-link to="/updateproducts" class="sidebar-link"><div class="flex"><i class=" pr-4"> <PackageOpen width="15px" height="15px"></PackageOpen> </i> Productos</div></router-link>
+
 
 <!-- 3. Flujo operativo -->
-<router-link to="/pedidoview" class="sidebar-link">Solicitudes de compra</router-link>
-<router-link to="/sellsview" class="sidebar-link">Ventas</router-link>
+<router-link to="/pedidoview" class="sidebar-link"><div class="flex"><i class=" pr-4"> <CircleDollarSign width="15px" height="15px"></CircleDollarSign> </i>Solicitudes de compra</div></router-link>
+<router-link to="/sellsview" class="sidebar-link"> <div class="flex"> <i class=" pr-4"> <SquareLibrary width="15px" height="15px"></SquareLibrary></i> Ventas</div> </router-link>
 
 <!-- 4. Análisis y soporte -->
-<router-link to="/generatereports" class="sidebar-link">Reportes</router-link>
-<router-link to="/chat-bot" class="sidebar-link">IA Asistente</router-link>
+<router-link to="/generatereports" class="sidebar-link"> <div class="flex"><i class=" pr-4"> <ClipboardMinus width="15px" height="15px"></ClipboardMinus> </i>Reportes</div></router-link>
+<router-link to="/chat-bot" class="sidebar-link"><div class="flex"><i class=" pr-4"> <BotMessageSquare width="15px" height="15px"></BotMessageSquare> </i>IA Asistente</div></router-link>
 
 <!-- 5. Configuración personal -->
-<router-link to="/profileconfig" class="sidebar-link">Configuración de perfil</router-link>
+<router-link to="/profileconfig" class="sidebar-link"><div class="flex"> <i class=" pr-4"> <Settings2 width="cd15px" height="15px"></Settings2> </i>Personalización</div></router-link>
 
 </nav>
 <nav class="sidebar-nav" id="sidebar-nav" v-if="rol === 'usuario_demo'" v-show="rol === 'usuario_demo'" >
@@ -55,28 +61,122 @@
 
 </nav>
 
-      <div class="sidebar-upgrade" >
-          <button @click="logout" class="upgrade-button">Cerrar Sesión</button>
-        </div>
+
     </div>
     <!-- Main Content -->
     <div class="main-content">
       <header class="header grid grid-cols-3 gap-9">
         
-        <span class="header-title upp "> Bienvenido <b> {{ user.username }}</b>  a,</span>
+        <span class="header-title upp opacity-9 ">
+
+          <i class="">
+
+
+            <Menu @click="ShowSidebarClick" color="#718096" :size="25" class="hover:bg-gray-200"></Menu>
+
+
+
+          </i>
+
+          </span>
+
 
         <div class="header-search">
-          <SearchView />
-          <img alt="User avatar" class="user-avatar" src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?t=st=1742573452~exp=1742577052~hmac=48c7c8f9821ee325037cc89c5eeb29c96999fff4466de8d2ded5e202cc2d700c&w=740" style="width: 40px;" />
+          <SearchView style="margin: 0px;" />
+          <span class=" ">
+
+<Bell class="m-0" style="margin: 5px; padding: 0px;"   color="#718096"
+             :size="25" />
+
+            
+        </span>
+
+        <span>
+          <Moon  
+          @click="OscureOn()"
+          
+          color="#718096"
+          :size="25"
+          style="margin: 5px;"/>
+        </span>
+        <span>
+
+
+          
+          <Minimize 
+          @click="entrarPantallaCompleta()"
+          color="#718096"
+          :size="25"
+          style="margin: 5px;"/>
+        </span>
+        <span>
+
+<router-link to="/profileconfig">
+  <Settings  
+          
+          color="#718096"
+          :size="25"
+          style="margin: 5px;"/>
+</router-link>
+
+        </span>
+
+          <img  alt="User avatar" @click="ShowProfileOptions()" class="user-avatar cursor-pointer" src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?t=st=1742573452~exp=1742577052~hmac=48c7c8f9821ee325037cc89c5eeb29c96999fff4466de8d2ded5e202cc2d700c&w=740" style="width: 40px;" />
           <h3 class="name"></h3>
+
+
+          <div class="flex items-center bg-red-500">
+            <ul v-show="profileOptions" class="profile-options absolute top-10 right-0 bg-white shadow-md p-2">
+<Transition name="fade-slide">
+
+   <div class="sidebar-upgrade p-6 bg-white rounded-xl shadow-lg w-full max-w-xs">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-6">{{ user.username }}</h1>
+    
+    <ul class="space-y-3">
+      <li>
+        <router-link to="/profileconfig" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+          <Settings2 class="mr-3 text-blue-500" width="18" height="18" />
+          <span>Personalización</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link to="/profileview" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+          <Settings2 class="mr-3 text-blue-500" width="18" height="18" />
+          <span>Perfil</span>
+        </router-link>
+      </li>
+
+      <li>
+        <router-link to="/loginview" class="flex items-center text-gray-700 hover:text-blue-600 transition-colors">
+          <Settings2 class="mr-3 text-blue-500" width="18" height="18" />
+          <span>Configuración</span>
+        </router-link>
+      </li>
+    </ul>
+
+    <button 
+      @click="logout"
+      class="mt-8 w-full py-2 px-4 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-all duration-200"
+    >
+      Cerrar Sesión
+    </button>
+  </div>
+
+</Transition>
+            </ul>
+          </div>
+          
         </div>
+
+
 
 
       </header>
       <div class="dashboard p-0 min-h-screen">
         <div class="max-w-7xl mx-auto">
-          <h1 class="text-3xl font-bold  mb-2">Dashboard</h1>
-          <p class=" mb-8">Visualiza y gestiona el estado de <b> {{ nameCompany }}</b> en un solo lugar  </p>
+          <h1 class="text-xl font-bold mt-8 mb-2 opacity-90">Dashboard</h1>
+          <p class=" mb-6">Visualiza y gestiona el estado de <b> {{ nameCompany }}</b> en un solo lugar  </p>
 
           <!-- Tarjetas resumen -->
           <div class="grid grid-cols-1 md:grid-cols-4 gap-0 mb-6" v-show="rol === 'admin_pro'">
@@ -354,8 +454,21 @@ import { Doughnut } from 'vue-chartjs'
 import Loader from "@/components/ScreenLoader.vue";
 import {Vue3Lottie} from "vue3-lottie";
 import animationData from "@/assets/animaciones/animalcare.json";
-
+import { Bell } from 'lucide-vue-next';
+import { Minimize } from 'lucide-vue-next';
+import { Warehouse } from 'lucide-vue-next';
+import { Moon } from 'lucide-vue-next';
+import { HandPlatter } from 'lucide-vue-next';
+import { Menu } from 'lucide-vue-next';
+import { ClipboardMinus } from 'lucide-vue-next';
+import { Settings2 } from 'lucide-vue-next';
+import { PackagePlus } from 'lucide-vue-next';
+import { BotMessageSquare } from 'lucide-vue-next';
+import { SquareLibrary } from 'lucide-vue-next';
+import { CircleDollarSign } from 'lucide-vue-next';
+import { Settings } from 'lucide-vue-next';
 import animationDataThanks from "@/assets/animaciones/cathappy.json";
+import { PackageOpen } from 'lucide-vue-next';
 import Swal from "sweetalert2";
 import SearchView from "@/components/SearchView.vue";
 import axios from "axios";
@@ -427,7 +540,24 @@ export default {
     Bar,
     Doughnut,
     Loader,
-    Vue3Lottie
+    Vue3Lottie,
+    Bell,
+    Moon,
+    Settings,
+    Minimize,
+    Menu,
+    Warehouse,
+    HandPlatter,
+    PackageOpen,
+    PackagePlus,
+    SquareLibrary,
+    Settings2,
+
+    CircleDollarSign,
+    ClipboardMinus,
+    BotMessageSquare
+
+    
    },
   name: "ProfileView",
   data() {
@@ -435,22 +565,28 @@ export default {
       showLogs: true,
       user: null,
       users: [], // Lista de usuarios para seleccionar el receiver_id
+      logo: "",
       isHidden: false,
       receiver_id: null,
       nameCompany:null,
+      profileOptions: false,
       animationDataThanks: animationDataThanks,
       animationData: animationData,
       rol: localStorage.getItem("rol"),
       descriptionCompany: "Descripción de la empresa",   
-       showLoading: true,   
+       showLoading: true,
+          
        messageSound: notifySound,
        mostrarInfo: false,
       newMessage: "",
       messages: [],
+      showSidebar: true,
       socket: null,
+      estaActiva : true,
       router: useRouter(), // ✅ Agregar router directamente aquí
       totalProducts: 0,
       totalUnidades: 0,
+      modoOscuro : false,
       totalUnidadesVentas: 0,
       totalventas: 0,
       
@@ -740,7 +876,7 @@ const ventasResponse = await axios.get("https://192.168.0.14:443/api/ventas", {
 
 // Accede al total de productos desde la respuesta paginada
 this.ventas = ventasResponse.data.ventas; // Array de productos de la página actual
-this.totalventas = ventasResponse.data.pagination.totalProducts; // Total de todos los productos
+this.totalventas = ventasResponse.data.pagination.totalVentas; // Total de todos los productos
 this.totalUnidadesVentas = ventasResponse.data.pagination.totalUnidades; // Total de todas las unidades
       
 
@@ -882,6 +1018,32 @@ if (!configString) {
   },
 
   methods: {
+
+    OscureOn() {
+
+      const root = document.documentElement;
+
+if (!this.modoOscuro) {
+  root.style.setProperty('--bg', '#1a202c');
+  root.style.setProperty('--text', '#f7fafc');
+  root.style.setProperty('--color-secundario', '#2d3748');
+} else {
+  root.style.setProperty('--bg', '#ffffff');
+  root.style.setProperty('--text', '#000000');
+  root.style.setProperty('--color-secundario', '#e2e8f0');
+}
+
+this.modoOscuro = !this.modoOscuro;
+
+
+
+    },
+
+    ShowSidebarClick() {
+      // this.showSidebar = !this.showSidebar
+
+      this.estaActiva = !this.estaActiva
+    },
    startTitleBlinking() {
   if (blinkInterval) return; // Evitar múltiples intervalos
 
@@ -891,6 +1053,18 @@ if (!configString) {
     toggle = !toggle;
   }, 1000); // cambia cada 1 segundo
 },
+entrarPantallaCompleta() {
+  const elem = document.documentElement; // toda la página
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { // Safari
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { // IE
+    elem.msRequestFullscreen();
+  }
+}
+,
 
 // Función para detener el parpadeo
  stopTitleBlinking() {
@@ -987,6 +1161,19 @@ if (!configString) {
       localStorage.removeItem("token");
       this.router.push("/loginview");
     },
+    ShowProfileOptions() {
+
+      if (this.profileOptions) {
+        this.profileOptions = !this.profileOptions
+      }
+
+      else {
+        this.profileOptions = !this.profileOptions
+      }
+      
+   
+
+    },
     scrollToBottom() {
       const chatContainer = this.$refs.chatContainer;
       if (chatContainer) {
@@ -1073,6 +1260,19 @@ if (!configString) {
   },
 
   mounted() {
+
+    const configRaw = localStorage.getItem("configuracion");
+    if (configRaw) {
+      
+      const config = JSON.parse(configRaw);
+      this.logo = config.logo_url || "https://placehold.co/600x400";
+
+    } else {
+      console.warn("⚠️ No hay configuración válida en localStorage");
+    }
+
+
+
     // Simulamos un tiempo mínimo de carga (ej: 2 segundos)
     const isFirstLogin = sessionStorage.getItem('isFirstLogin') === 'true';
 
@@ -1104,6 +1304,14 @@ if (!configString) {
 
 <style scoped>
 
+
+
+
+
+svg {
+
+  padding: 0;
+}
 
 body {
   font-family: 'Roboto', sans-serif;
@@ -1174,9 +1382,27 @@ opacity: 0; /* Finaliza con opacidad 0 */
 }
 
 .sidebar {
-  width: 9rem;
-  background-color:var(--bg);
+  width: 14rem;
+  background-color: #1A202C;
   height: 100vh;
+  
+  color: wheat;
+}
+
+.sidebar-navegation {
+  position: relative;
+  
+  width: 3rem;
+
+  
+  overflow: hidden;
+  background-color: #1A202C;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem 0;
+ 
 }
 .enter-msg, .select-user{
   color: rgb(22, 41, 59);
@@ -1187,9 +1413,10 @@ opacity: 0; /* Finaliza con opacidad 0 */
   text-align: center;
   font-size: 0.8rem;
   font-weight: bold;
-  border-bottom: 1px solid #0c1422;
+
   height: 2rem;
-  margin-top: -1rem;
+  margin-bottom: 40px;
+  
 }
 
 .sidebar-nav {
@@ -1201,7 +1428,6 @@ opacity: 0; /* Finaliza con opacidad 0 */
   display: block;
   padding: 0.625rem 1rem;
   text-decoration: none;
-  color: var(--text);
 }
 
 .name {
@@ -1217,8 +1443,25 @@ opacity: 0; /* Finaliza con opacidad 0 */
 }
 
 .sidebar-upgrade {
+
+  transition: all 0.3s ease;
   margin-top: 1rem;
   padding: 1rem;
+
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .upgrade-button {
@@ -1240,9 +1483,26 @@ opacity: 0; /* Finaliza con opacidad 0 */
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  padding: 1rem;
+  position: relative;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--text);
 
 
   background-color: var(--bg);
+}
+
+.header svg{
+
+
+  cursor: pointer;
 }
 
 .header-title {
@@ -1351,6 +1611,23 @@ opacity: 0; /* Finaliza con opacidad 0 */
 
 .message-item, .task-item {
   color: #2d3748;
+}
+
+.fade-slide-enter-active {
+  transition: all 0.4s ease;
+}
+.fade-slide-leave-active {
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+.fade-slide-enter-to {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .message-item:hover {
