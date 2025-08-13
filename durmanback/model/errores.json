@@ -1,0 +1,402 @@
+[
+  {
+    "input": "hola",
+    "category": "saludo"
+  },
+  {
+    "input": "como estas",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "saludo"
+  },
+  {
+    "input": "hola",
+    "category": "saludo"
+  },
+  {
+    "input": "nada",
+    "category": "saludo"
+  },
+  {
+    "input": "hola",
+    "category": "saludo"
+  },
+  {
+    "input": "nada",
+    "category": "saludo"
+  },
+  {
+    "input": "genera informe de inventario",
+    "category": "unknown"
+  },
+  {
+    "input": "genera informe",
+    "category": "reporte"
+  },
+  {
+    "input": "genera informe de inventario",
+    "category": "pedido"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "saludo"
+  },
+  {
+    "input": "genera informe",
+    "category": "reporte"
+  },
+  {
+    "input": "genera informe de inventario",
+    "category": "reporte"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "reporte"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "reporte"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "reporte"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "saludo"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "reporte"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "buenos dias",
+    "category": "saludo"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "generar informw",
+    "category": "factura_create"
+  },
+  {
+    "input": "añadir producto",
+    "category": "unknown"
+  },
+  {
+    "input": "jaja",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "gracias",
+    "category": "unknown"
+  },
+  {
+    "input": "ayuda",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "si",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "gracias",
+    "category": "unknown"
+  },
+  {
+    "input": "buenas",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  },
+  {
+    "input": "Hola",
+    "output": "¡Hola! ¿En qué puedo ayudarte?",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuántos tubos de PVC hay en stock?",
+    "output": "Actualmente hay 120 tubos de PVC en stock.",
+    "category": "unknown"
+  },
+  {
+    "input": "¿Cuánto cuesta un tubo de acero galvanizado?",
+    "output": "El precio de un tubo de acero galvanizado es de $35 por unidad.",
+    "category": "unknown"
+  },
+  {
+    "input": "Quiero devolver un lote de tuberías defectuosas",
+    "output": "Voy a procesar la devolución de las tuberías defectuosas.",
+    "category": "unknown"
+  },
+  {
+    "input": "Gracias",
+    "output": "¡De nada! ¿Necesitas algo más?",
+    "category": "unknown"
+  },
+  {
+    "input": "hola",
+    "category": "unknown"
+  }
+]
